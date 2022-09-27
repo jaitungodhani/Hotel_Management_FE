@@ -11,6 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const style = {
     position: 'absolute',
@@ -24,6 +26,14 @@ const style = {
     p: 4,
 };
 
+const buttonstyledClasses={
+    "delete":{
+        color:"red"
+    },
+    "edit":{
+        color :"blue"
+    }
+}
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -110,7 +120,12 @@ export default function TransitionsModal({ open, handleClose }) {
                                             </StyledTableCell>
                                             <StyledTableCell align="right">{row.category}</StyledTableCell>
                                             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
-                                            <StyledTableCell align="right"></StyledTableCell>
+                                            <StyledTableCell align="right">
+                                                <div>
+                                                    <DeleteIcon sx={buttonstyledClasses.delete}/>
+                                                    <EditIcon sx={buttonstyledClasses.edit}/>
+                                                </div>
+                                            </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
