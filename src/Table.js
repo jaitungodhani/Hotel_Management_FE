@@ -27,8 +27,8 @@ const Table =({item})=>{
                 <button onClick={handleaddorderOpen}><AddCircleOutlineIcon /></button>
             </div>
 
-            <TransitionsModal open={open} handleClose={handleClose}/>
-            <AddOrderModal open={openaddorder} handleClose={handleaddorderClose}/>
+            <TransitionsModal open={open} handleClose={handleClose} table={item}/>
+            <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item}/>
         </div>
     );
 }

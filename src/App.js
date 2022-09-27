@@ -39,6 +39,7 @@ function App() {
 }
     ]
   return (
+    
     <div className='App'>
         {table_data.map((item)=>(
           <Table item={item.table_no} />

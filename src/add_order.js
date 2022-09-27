@@ -19,6 +19,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    borderRadius:'15px'
 };
 
 const selectcontrol = {
@@ -26,7 +27,7 @@ const selectcontrol = {
     marginBottom: '10px'
 }
 
-export default function AddOrderModal({ open, handleClose }) {
+export default function AddOrderModal({ open, handleClose,table}) {
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState('');
     const [subitem, setSubItem] = React.useState([]);
@@ -96,6 +97,10 @@ export default function AddOrderModal({ open, handleClose }) {
             >
                 <Fade in={open}>
                     <Box sx={style}>
+                    <FormControl fullWidth sx={selectcontrol}>
+                        <TextField type="text" label="Table Name" value={table} disabled='true'/>
+                    </FormControl>
+
                         <FormControl fullWidth sx={selectcontrol}>
                             <InputLabel id="demo-simple-select-label">Category</InputLabel>
                             <Select

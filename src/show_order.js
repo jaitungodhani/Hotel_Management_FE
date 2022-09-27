@@ -24,6 +24,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    borderRadius:'15px'
 };
 
 const buttonstyledClasses={
@@ -65,7 +66,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 
 
-export default function TransitionsModal({ open, handleClose }) {
+export default function TransitionsModal({ open, handleClose,table }) {
     console.log(open);
     const order_data = [{
         id:1,
@@ -102,6 +103,7 @@ export default function TransitionsModal({ open, handleClose }) {
             >
                 <Fade in={open}>
                     <Box sx={style}>
+                        <h2>{table}</h2>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                 <TableHead>
