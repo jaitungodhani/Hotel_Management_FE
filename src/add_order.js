@@ -19,7 +19,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    borderRadius:'15px'
+    borderRadius: '15px'
 };
 
 const selectcontrol = {
@@ -27,10 +27,20 @@ const selectcontrol = {
     marginBottom: '10px'
 }
 
-export default function AddOrderModal({ open, handleClose,table}) {
+export default function AddOrderModal({ open, handleClose, table, rawData }) {
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState('');
     const [subitem, setSubItem] = React.useState([]);
+
+    React.useEffect(() => {
+        console.log("rawData:::::", rawData);
+
+        if (rawData !== undefined) {
+            setCategory(rawData.item.category.id);
+            setSubItem(rawData.item.id);
+        }
+    }, [rawData])
+
 
     const handleChange = (event) => {
         setCategory(event.target.value);
@@ -97,9 +107,9 @@ export default function AddOrderModal({ open, handleClose,table}) {
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                    <FormControl fullWidth sx={selectcontrol}>
-                        <TextField type="text" label="Table Name" value={table} disabled='true'/>
-                    </FormControl>
+                        <FormControl fullWidth sx={selectcontrol}>
+                            <TextField type="text" label="Table Name" value={table} disabled />
+                        </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
                             <InputLabel id="demo-simple-select-label">Category</InputLabel>
@@ -127,14 +137,14 @@ export default function AddOrderModal({ open, handleClose,table}) {
                                 onChange={handleItem}
                             >
                                 {subitem.map((itm) => (
-                                    <MenuItem key={itm.id} value={itm.name}>{itm.name}</MenuItem>
+                                    <MenuItem key={itm.id} value={itm.id}>{itm.name}</MenuItem>
                                 ))
                                 }
                             </Select>
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                        <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} defaultValue="1"/>
+                            <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} defaultValue="1" />
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>

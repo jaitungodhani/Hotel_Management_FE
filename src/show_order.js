@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
+import Table, { tableClasses } from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddOrderModal from './add_order';
 
 const style = {
     position: 'absolute',
@@ -67,23 +68,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 export default function TransitionsModal({ open, handleClose,table }) {
-    console.log(open);
-    const order_data = [{
+    const [updateorder,setupdateOrder] = React.useState(false);
+    const [updateorderData,setUpdateorderData]=React.useState();
+    const handleUpdateOpen = (rowData) => {
+        console.log(rowData);
+        setupdateOrder(true);
+        setUpdateorderData(rowData);
+    }
+    const handleUpdateClose = () => setupdateOrder(false);
+
+    
+
+
+    const order_data = [
+        {
         id:1,
-        item: "maisure",
-        category: "south indian",
+        item: {
+            id: 1,
+            name: "Panir Tikka",
+            category: {
+                id: 1,
+                name: "punjabi"
+            }
+        },
         quantity: 2
     },
     {
         id:2,
-        item: "Soft Paper",
-        category: "south indian",
+        item:  {
+            id: 2,
+            name: "Khichadi",
+            category: {
+                id: 2,
+                name: "Gujarati"
+            }
+        },
         quantity: 1
     },
     {
         id:3,
-        item: "Soft Paper",
-        category: "south indian",
+        item: {
+            id: 3,
+            name: "Maisure",
+            category: {
+                id: 3,
+                name: "South Indian"
+            }
+        },
         quantity: 1
     }
     ]
@@ -118,14 +149,15 @@ export default function TransitionsModal({ open, handleClose,table }) {
                                     {order_data.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
-                                                {row.item}
+                                                {row.item.name}
                                             </StyledTableCell>
-                                            <StyledTableCell align="right">{row.category}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.item.category.name}</StyledTableCell>
                                             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <div>
                                                     <DeleteIcon sx={buttonstyledClasses.delete}/>
-                                                    <EditIcon sx={buttonstyledClasses.edit}/>
+                                                    <EditIcon onClick={()=>handleUpdateOpen(row)} sx={buttonstyledClasses.edit}/>
+                                                    <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table}/>
                                                 </div>
                                             </StyledTableCell>
                                         </StyledTableRow>
@@ -136,6 +168,7 @@ export default function TransitionsModal({ open, handleClose,table }) {
                     </Box>
                 </Fade>
             </Modal>
+            
         </div>
     );
 }
