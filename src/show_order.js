@@ -77,9 +77,6 @@ export default function TransitionsModal({ open, handleClose,table }) {
     }
     const handleUpdateClose = () => setupdateOrder(false);
 
-    
-
-
     const order_data = [
         {
         id:1,

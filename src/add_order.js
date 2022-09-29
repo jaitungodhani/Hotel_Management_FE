@@ -29,26 +29,34 @@ const selectcontrol = {
 
 export default function AddOrderModal({ open, handleClose, table, rawData }) {
     const [category, setCategory] = React.useState('');
-    const [item, setItem] = React.useState('');
-    const [subitem, setSubItem] = React.useState([]);
+    const [item, setItem] = React.useState([]);
+    const [subitem, setSubItem] = React.useState({});
+    const [quantity, setQuantity] = React.useState();
 
     React.useEffect(() => {
-        console.log("rawData:::::", rawData);
-
         if (rawData !== undefined) {
+            console.log("::::::",rawData.item.id);
             setCategory(rawData.item.category.id);
+            setItem(items.filter(i => i.category.id === rawData.item.category.id));
             setSubItem(rawData.item.id);
+            setQuantity(rawData.quantity);
         }
     }, [rawData])
 
 
     const handleChange = (event) => {
         setCategory(event.target.value);
-        setSubItem(items.filter(i => i.category.id === event.target.value))
+        setItem(items.filter(i => i.category.id === event.target.value))
     };
 
     const handleItem = (event) => {
-        setItem(event.target.value);
+        // console.log("::::::",event.target.value);
+        setSubItem(event.target.value);
+    };
+
+    const handleQuan = (event) => {
+        // console.log("::::::",event.target.value);
+        setQuantity(event.target.value);
     };
     const category_data = [
         {
@@ -119,10 +127,12 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                                 value={category}
                                 label="Category"
                                 onChange={handleChange}
+                                disabled={rawData?true:false}
                             >
                                 {category_data.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
                                 ))
+
                                 }
                             </Select>
                         </FormControl>
@@ -132,11 +142,12 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={item}
+                                value={subitem}
                                 label="Items"
                                 onChange={handleItem}
+                                disabled={rawData?true:false}
                             >
-                                {subitem.map((itm) => (
+                                {item.map((itm) => (
                                     <MenuItem key={itm.id} value={itm.id}>{itm.name}</MenuItem>
                                 ))
                                 }
@@ -144,7 +155,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                            <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} defaultValue="1" />
+                            <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} defaultValue="1" value={quantity} onChange={handleQuan}/>
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>

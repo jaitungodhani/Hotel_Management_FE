@@ -1,5 +1,6 @@
 import './App.css';
 import Table from './Table';
+import { BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
   const table_data=[{
@@ -41,6 +42,9 @@ function App() {
   return (
     
     <div className='App'>
+      <Router>
+        
+      </Router>
         {table_data.map((item)=>(
           <Table item={item.table_no} />
         ))}
