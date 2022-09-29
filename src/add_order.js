@@ -32,14 +32,15 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
     const [item, setItem] = React.useState([]);
     const [subitem, setSubItem] = React.useState({});
     const [quantity, setQuantity] = React.useState();
+    const [orderbtn, setOrderBtn] = React.useState(false);
 
     React.useEffect(() => {
         if (rawData !== undefined) {
-            console.log("::::::",rawData.item.id);
             setCategory(rawData.item.category.id);
             setItem(items.filter(i => i.category.id === rawData.item.category.id));
             setSubItem(rawData.item.id);
             setQuantity(rawData.quantity);
+            setOrderBtn(true);
         }
     }, [rawData])
 
@@ -159,7 +160,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                            <Button variant="contained">Create Order</Button>
+                            <Button variant="contained">{orderbtn?"Update Order":"Create Order"}</Button>
                         </FormControl>
                     </Box>
                 </Fade>

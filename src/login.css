@@ -1,0 +1,20 @@
+.loginImgPart{
+    height: 80vh;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginImgPart img{
+    height: 450px;
+    width: 600px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 6px #888888;
+}
+
+.loginFormpart{
+    border: 1px solid blue;
+    height: 80vh;
+    margin-right: 10px;
+}
