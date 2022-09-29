@@ -1,6 +1,6 @@
 import './App.css';
 import Table from './Table';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes,Route } from 'react-router-dom';
 
 function App() {
   const table_data=[{
@@ -43,7 +43,11 @@ function App() {
     
     <div className='App'>
       <Router>
-        
+        <Routes>
+          <Route path='/' element={
+            
+          }/>
+        </Routes>
       </Router>
         {table_data.map((item)=>(
           <Table item={item.table_no} />
