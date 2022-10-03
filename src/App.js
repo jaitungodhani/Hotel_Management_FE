@@ -9,7 +9,7 @@ function App() {
   
   return (
     
-    <div className='App'>
+    <div>
       <Router>
         <Routes>
           <Route path='/order' element={

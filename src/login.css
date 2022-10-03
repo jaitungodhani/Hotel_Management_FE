@@ -1,25 +1,11 @@
 
-.loginImgPart{
-    height: 80vh;
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.loginImgPart img{
-    height: 55%;
-    width: 70%;
-    border-radius: 20px;
-    box-shadow: 10px 10px 6px #888888;
-}
-
-.loginFormpart{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-}
+.login_page{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
 .loginForm{
     background-color: #fff;
@@ -27,9 +13,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width:75%;
+    width:33%;
     border-radius: 20px;
     padding: 45px 0 45px 0;
+}
+
+.loginForm img{
+    width: 40%;
+    margin-bottom: 10px;
 }
 
 .loginForm .userName{

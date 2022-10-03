@@ -1,7 +1,7 @@
 .App{
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: wrap;
-    margin-top: 70px;
+    flex-wrap: wrap; */
+    margin-top: 35px;
   }

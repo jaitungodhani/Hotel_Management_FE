@@ -15,25 +15,35 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
 
-const style = {
+const style = (theme) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    borderRadius:'15px'
-};
-
-const buttonstyledClasses={
-    "delete":{
-        color:"red"
+    borderRadius: '15px',
+    [theme.breakpoints.down('md')]: {
+        width: '85%',
+        padding:'16px'
     },
-    "edit":{
-        color :"blue"
+    [theme.breakpoints.up('md')]: {
+        width: '70%',
+        padding:'22px'
+    },
+    [theme.breakpoints.up('lg')]: {
+        width: '50%',
+    },
+});
+
+const buttonstyledClasses = {
+    "delete": {
+        color: "red"
+    },
+    "edit": {
+        color: "blue"
     }
 }
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -67,9 +77,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ];
 
 
-export default function TransitionsModal({ open, handleClose,table }) {
-    const [updateorder,setupdateOrder] = React.useState(false);
-    const [updateorderData,setUpdateorderData]=React.useState();
+export default function TransitionsModal({ open, handleClose, table }) {
+    const [updateorder, setupdateOrder] = React.useState(false);
+    const [updateorderData, setUpdateorderData] = React.useState();
     const handleUpdateOpen = (rowData) => {
         console.log(rowData);
         setupdateOrder(true);
@@ -79,41 +89,41 @@ export default function TransitionsModal({ open, handleClose,table }) {
 
     const order_data = [
         {
-        id:1,
-        item: {
             id: 1,
-            name: "Panir Tikka",
-            category: {
+            item: {
                 id: 1,
-                name: "punjabi"
-            }
+                name: "Panir Tikka",
+                category: {
+                    id: 1,
+                    name: "punjabi"
+                }
+            },
+            quantity: 2
         },
-        quantity: 2
-    },
-    {
-        id:2,
-        item:  {
+        {
             id: 2,
-            name: "Khichadi",
-            category: {
+            item: {
                 id: 2,
-                name: "Gujarati"
-            }
+                name: "Khichadi",
+                category: {
+                    id: 2,
+                    name: "Gujarati"
+                }
+            },
+            quantity: 1
         },
-        quantity: 1
-    },
-    {
-        id:3,
-        item: {
+        {
             id: 3,
-            name: "Maisure",
-            category: {
+            item: {
                 id: 3,
-                name: "South Indian"
-            }
-        },
-        quantity: 1
-    }
+                name: "Maisure",
+                category: {
+                    id: 3,
+                    name: "South Indian"
+                }
+            },
+            quantity: 1
+        }
     ]
     return (
         <div>
@@ -152,9 +162,9 @@ export default function TransitionsModal({ open, handleClose,table }) {
                                             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <div>
-                                                    <DeleteIcon sx={buttonstyledClasses.delete}/>
-                                                    <EditIcon onClick={()=>handleUpdateOpen(row)} sx={buttonstyledClasses.edit}/>
-                                                    <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table}/>
+                                                    <DeleteIcon sx={buttonstyledClasses.delete} />
+                                                    <EditIcon onClick={() => handleUpdateOpen(row)} sx={buttonstyledClasses.edit} />
+                                                    <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table} />
                                                 </div>
                                             </StyledTableCell>
                                         </StyledTableRow>
@@ -165,7 +175,7 @@ export default function TransitionsModal({ open, handleClose,table }) {
                     </Box>
                 </Fade>
             </Modal>
-            
+
         </div>
     );
 }

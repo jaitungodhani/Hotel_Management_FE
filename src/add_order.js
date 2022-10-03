@@ -9,18 +9,28 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button, TextField } from '@mui/material';
 
-const style = {
+const style = (theme) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    borderRadius: '15px'
-};
+    borderRadius: '15px',
+    [theme.breakpoints.down('md')]: {
+        width: '85%',
+        padding:'16px'
+    },
+    [theme.breakpoints.up('md')]: {
+        width: '70%',
+        padding:'22px'
+    },
+    [theme.breakpoints.up('lg')]: {
+        width: '50%',
+    },
+});
 
 const selectcontrol = {
     marginTop: '10px',
