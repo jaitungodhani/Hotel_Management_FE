@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
+import { IconButton } from '@mui/material';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -27,11 +28,11 @@ const style = (theme) => ({
     borderRadius: '15px',
     [theme.breakpoints.down('md')]: {
         width: '85%',
-        padding:'16px'
+        padding: '16px'
     },
     [theme.breakpoints.up('md')]: {
         width: '70%',
-        padding:'22px'
+        padding: '22px'
     },
     [theme.breakpoints.up('lg')]: {
         width: '50%',
@@ -46,6 +47,17 @@ const buttonstyledClasses = {
         color: "blue"
     }
 }
+
+const getOrderStatusColor = (status) => {
+    if (status === "Done") {
+        return "green";
+    } else if (status === "Preparing") {
+        return "orange";
+    } else if (status === "Waiting") {
+        return "red";
+    }
+};
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -98,7 +110,8 @@ export default function TransitionsModal({ open, handleClose, table }) {
                     name: "punjabi"
                 }
             },
-            quantity: 2
+            quantity: 2,
+            status: "Done"
         },
         {
             id: 2,
@@ -110,7 +123,8 @@ export default function TransitionsModal({ open, handleClose, table }) {
                     name: "Gujarati"
                 }
             },
-            quantity: 1
+            quantity: 1,
+            status: "Waiting"
         },
         {
             id: 3,
@@ -122,7 +136,8 @@ export default function TransitionsModal({ open, handleClose, table }) {
                     name: "South Indian"
                 }
             },
-            quantity: 1
+            quantity: 1,
+            status: "Preparing"
         }
     ]
     return (
@@ -149,6 +164,7 @@ export default function TransitionsModal({ open, handleClose, table }) {
                                         <StyledTableCell>Item</StyledTableCell>
                                         <StyledTableCell align="right">Category</StyledTableCell>
                                         <StyledTableCell align="right">Quan.</StyledTableCell>
+                                        <StyledTableCell align="right">Status</StyledTableCell>
                                         <StyledTableCell align="right">Action</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
@@ -160,10 +176,12 @@ export default function TransitionsModal({ open, handleClose, table }) {
                                             </StyledTableCell>
                                             <StyledTableCell align="right">{row.item.category.name}</StyledTableCell>
                                             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
+                                            <StyledTableCell align="right" sx={{ color: getOrderStatusColor(row.status) }}>{row.status}</StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <div>
-                                                    <DeleteIcon sx={buttonstyledClasses.delete} />
-                                                    <EditIcon onClick={() => handleUpdateOpen(row)} sx={buttonstyledClasses.edit} />
+                                                    <IconButton><DeleteIcon sx={buttonstyledClasses.delete} /></IconButton>
+                                                    <IconButton>
+                                                        <EditIcon onClick={() => handleUpdateOpen(row)} sx={buttonstyledClasses.edit} /></IconButton>
                                                     <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table} />
                                                 </div>
                                             </StyledTableCell>
