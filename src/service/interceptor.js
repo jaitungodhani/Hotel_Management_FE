@@ -74,14 +74,14 @@ instance.interceptors.response.use(
                         refresh: refreshToken
                     })
                     .then(res => {
+                        console.log(":::::::::", res.status);
                         if (res.status === 200) {
                             localStorage.setItem("access_token", res.data.access)
                             instance.defaults.headers.common['Authorization'] =
                                 'Bearer ' + GetAccessToken()
                             return instance(originalRequest)
-                        }
-                    },error=>{
-                        if (error){
+                        } else if (res.status === 401) {
+                            localStorage.clear();
                             window.location.href = "http://localhost:3000";
                         }
                     })
