@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-// import LocalStorageService from './services/storage/localstorageservice'
+
 
 
 
@@ -12,7 +11,7 @@ const GetAccessToken = () => {
     }
     else {
         localStorage.clear();
-        // navigate("/login");
+        window.location.href = "http://localhost:3000";
     }
 }
 
@@ -23,7 +22,7 @@ const GetRefreshToken = () => {
     }
     else {
         localStorage.clear();
-        // navigate("/login");
+        window.location.href = "http://localhost:3000";
     }
 }
 
@@ -57,7 +56,6 @@ instance.interceptors.response.use(
     },
     function (error) {
         const originalRequest = error.config
-        console.log(error);
         //   if (
         //     error.response.status === 401 &&
         //     originalRequest.url === 'http://127.0.0.1:3000/v1/auth/token'
@@ -69,21 +67,22 @@ instance.interceptors.response.use(
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true
                 const refreshToken = GetRefreshToken()
-                return instance
-                    .post('http://127.0.0.1:8000/auth_login/refresh_token/', {
-                        refresh: refreshToken
-                    })
+                return axios.post('http://127.0.0.1:8000/auth_login/refresh_token/', {
+                    refresh: refreshToken
+                })
                     .then(res => {
                         console.log(":::::::::", res.status);
                         if (res.status === 200) {
                             localStorage.setItem("access_token", res.data.access)
+                            window.location.reload();
                             instance.defaults.headers.common['Authorization'] =
                                 'Bearer ' + GetAccessToken()
                             return instance(originalRequest)
-                        } else if (res.status === 401) {
-                            localStorage.clear();
-                            window.location.href = "http://localhost:3000";
                         }
+                    }, (error) => {
+                        localStorage.clear();
+                        window.location.href = "http://localhost:3000";
+                        console.log(".........", error);
                     })
             }
         }
