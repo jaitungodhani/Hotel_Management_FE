@@ -21,6 +21,10 @@ export const itemApi =()=>{
     return instance.get("/api/itemdata/");
 }
 
-export const orderApi =()=>{
-    return instance.get("/api/orderdata/");
+export const orderApi =(pk)=>{
+    return instance.get(`/api/orderdata/${pk}`);
 }
+
+export const orderApiPost=(payload)=>{
+    return instance.post("/api/orderdata/",payload);
+};

@@ -7,8 +7,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Button, TextField } from '@mui/material';
-import { categoryApi, itemApi } from './service/config';
+import {Button, TextField } from '@mui/material';
+import { categoryApi, itemApi, orderApiPost } from './service/config';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -85,48 +85,19 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
         // console.log("::::::",event.target.value);
         setQuantity(event.target.value);
     };
-    // const category_data = [
-    //     {
-    //         "id": 1,
-    //         "name": "punjabi"
-    //     },
-    //     {
-    //         "id": 2,
-    //         "name": "Gujarati"
-    //     },
-    //     {
-    //         "id": 3,
-    //         "name": "South Indian"
-    //     }
-    // ]
 
-    // const items = [
-    //     {
-    //         "id": 1,
-    //         "name": "Panir Tikka",
-    //         "category": {
-    //             "id": 1,
-    //             "name": "punjabi"
-    //         }
-    //     },
-    //     {
-    //         "id": 2,
-    //         "name": "Khichadi",
-    //         "category": {
-    //             "id": 2,
-    //             "name": "Gujarati"
-    //         }
-    //     },
-    //     {
-    //         "id": 3,
-    //         "name": "Maisure",
-    //         "category": {
-    //             "id": 3,
-    //             "name": "South Indian"
-    //         }
-    //     }
-    // ]
+    const createOrder =()=>{
+        console.log(subitem.id,quantity,table.id);
+        orderApiPost({Item_id:subitem.id,quantity:quantity,table:table.id}).then((res)=>{
+            // alert(`Order Create Succeessfully at ${table.name}`)
+        },(error)=>{
+            console.log(error);
+        });
+    }
 
+    const updateOrder =()=>{
+        orderApiPost().then(()=>{},()=>{});
+    }
     return (
         <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -144,7 +115,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                 <Fade in={open}>
                     <Box sx={style}>
                         <FormControl fullWidth sx={selectcontrol}>
-                            <TextField type="text" label="Table Name" value={table} disabled />
+                            <TextField type="text" label="Table Name" value={table.name} disabled />
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
@@ -187,7 +158,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                            <Button variant="contained">{orderbtn?"Update Order":"Create Order"}</Button>
+                            <Button onClick={orderbtn?updateOrder:createOrder} variant="contained">{orderbtn?"Update Order":"Create Order"}</Button>
                         </FormControl>
                     </Box>
                 </Fade>

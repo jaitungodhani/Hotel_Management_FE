@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { styled } from '@mui/material/styles';
-import Table, { tableClasses } from '@mui/material/Table';
+import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
 import { IconButton } from '@mui/material';
-import { orderApi } from './service/config';
+
 
 const style = (theme) => ({
     position: 'absolute',
@@ -79,20 +79,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-// function createData(name, calories, fat, carbs, protein) {
-//     return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//     createData('Item', 159, 6.0, 24, 4.0),
-//     createData('Category', 237, 9.0, 37, 4.3),
-//     createData('Quan.', 262, 16.0, 24, 6.0)
-// ];
-
-
-export default function TransitionsModal({ open, handleClose, table }) {
+export default function TransitionsModal({ open, handleClose, table,orderData }) {
     const [updateorder, setupdateOrder] = React.useState(false);
-    const [orderData,setOrderData]=React.useState([]);
+    // const [orderData,setOrderData]=React.useState([]);
     const [updateorderData, setUpdateorderData] = React.useState();
     const handleUpdateOpen = (rowData) => {
         console.log(rowData);
@@ -101,55 +90,16 @@ export default function TransitionsModal({ open, handleClose, table }) {
     }
     const handleUpdateClose = () => setupdateOrder(false);
     
-    React.useEffect(()=>{
-        orderApi().then((res)=>{
-            setOrderData(res.data.data);
-        },(error)=>{
-            console.log(error);
-        });
-    },[]);
+    // React.useEffect(()=>{
+    //     orderApiPost({"table_id":table.id}).then((res)=>{
+    //         console.log(res.data.data);
+    //         setOrderData(res.data.data);
+    //     },(error)=>{
+    //         console.log(error);
+    //     });
+    // },[]);
 
-    // const order_data = [
-    //     {
-    //         id: 1,
-    //         item: {
-    //             id: 1,
-    //             name: "Panir Tikka",
-    //             category: {
-    //                 id: 1,
-    //                 name: "punjabi"
-    //             }
-    //         },
-    //         quantity: 2,
-    //         status: "Done"
-    //     },
-    //     {
-    //         id: 2,
-    //         item: {
-    //             id: 2,
-    //             name: "Khichadi",
-    //             category: {
-    //                 id: 2,
-    //                 name: "Gujarati"
-    //             }
-    //         },
-    //         quantity: 1,
-    //         status: "Waiting"
-    //     },
-    //     {
-    //         id: 3,
-    //         item: {
-    //             id: 3,
-    //             name: "Maisure",
-    //             category: {
-    //                 id: 3,
-    //                 name: "South Indian"
-    //             }
-    //         },
-    //         quantity: 1,
-    //         status: "Preparing"
-    //     }
-    // ]
+    
     return (
         <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -166,7 +116,7 @@ export default function TransitionsModal({ open, handleClose, table }) {
             >
                 <Fade in={open}>
                     <Box sx={style}>
-                        <h2>{table}</h2>
+                        <h2>{table.name}</h2>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                 <TableHead>

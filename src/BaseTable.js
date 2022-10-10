@@ -22,7 +22,7 @@ const BaseTable = () => {
       <Grid container >
         {table_data.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={4}>
-            <Table item={item.name} />
+            <Table item={item} />
           </Grid>
         ))}
       </Grid>

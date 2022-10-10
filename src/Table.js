@@ -5,21 +5,33 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import TransitionsModal from './show_order';
 import AddOrderModal from './add_order';
+import { orderApi} from './service/config';
 
 
 const Table =({item})=>{
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+    const [orderData,setOrderData]=React.useState([]);
+    const handleOpen = () => {
+        setOpen(true);
+        orderApi(item.id).then((res)=>{
+            setOrderData(res.data.data);
+        },(error)=>{
+            console.log(error);
+        });
+    };
     const handleClose = () => setOpen(false);
 
     const [openaddorder, setOrder] = React.useState(false);
-    const handleaddorderOpen = () => setOrder(true);
+    const handleaddorderOpen = () => {
+        setOrder(true);
+
+    };
     const handleaddorderClose = () => setOrder(false);
     return(
         <div className="table">
             <div className='upper'>
                 <TableRestaurantIcon className='icon'/>
-                <h1>{item}</h1>
+                <h1>{item.name}</h1>
             </div>
             
             <div className="bottom">
@@ -27,7 +39,7 @@ const Table =({item})=>{
                 <button onClick={handleaddorderOpen}><AddCircleOutlineIcon /></button>
             </div>
 
-            <TransitionsModal open={open} handleClose={handleClose} table={item}/>
+            <TransitionsModal open={open} handleClose={handleClose} table={item} orderData={orderData}/>
             <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item}/>
         </div>
     );
