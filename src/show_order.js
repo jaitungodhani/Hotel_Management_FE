@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
 import { IconButton } from '@mui/material';
+import { orderApi } from './service/config';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -49,9 +50,9 @@ const buttonstyledClasses = {
 }
 
 const getOrderStatusColor = (status) => {
-    if (status === "Done") {
+    if (status === "Completed") {
         return "green";
-    } else if (status === "Preparing") {
+    } else if (status === "Processing") {
         return "orange";
     } else if (status === "Waiting") {
         return "red";
@@ -91,6 +92,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function TransitionsModal({ open, handleClose, table }) {
     const [updateorder, setupdateOrder] = React.useState(false);
+    const [orderData,setOrderData]=React.useState([]);
     const [updateorderData, setUpdateorderData] = React.useState();
     const handleUpdateOpen = (rowData) => {
         console.log(rowData);
@@ -98,48 +100,56 @@ export default function TransitionsModal({ open, handleClose, table }) {
         setUpdateorderData(rowData);
     }
     const handleUpdateClose = () => setupdateOrder(false);
+    
+    React.useEffect(()=>{
+        orderApi().then((res)=>{
+            setOrderData(res.data.data);
+        },(error)=>{
+            console.log(error);
+        });
+    },[]);
 
-    const order_data = [
-        {
-            id: 1,
-            item: {
-                id: 1,
-                name: "Panir Tikka",
-                category: {
-                    id: 1,
-                    name: "punjabi"
-                }
-            },
-            quantity: 2,
-            status: "Done"
-        },
-        {
-            id: 2,
-            item: {
-                id: 2,
-                name: "Khichadi",
-                category: {
-                    id: 2,
-                    name: "Gujarati"
-                }
-            },
-            quantity: 1,
-            status: "Waiting"
-        },
-        {
-            id: 3,
-            item: {
-                id: 3,
-                name: "Maisure",
-                category: {
-                    id: 3,
-                    name: "South Indian"
-                }
-            },
-            quantity: 1,
-            status: "Preparing"
-        }
-    ]
+    // const order_data = [
+    //     {
+    //         id: 1,
+    //         item: {
+    //             id: 1,
+    //             name: "Panir Tikka",
+    //             category: {
+    //                 id: 1,
+    //                 name: "punjabi"
+    //             }
+    //         },
+    //         quantity: 2,
+    //         status: "Done"
+    //     },
+    //     {
+    //         id: 2,
+    //         item: {
+    //             id: 2,
+    //             name: "Khichadi",
+    //             category: {
+    //                 id: 2,
+    //                 name: "Gujarati"
+    //             }
+    //         },
+    //         quantity: 1,
+    //         status: "Waiting"
+    //     },
+    //     {
+    //         id: 3,
+    //         item: {
+    //             id: 3,
+    //             name: "Maisure",
+    //             category: {
+    //                 id: 3,
+    //                 name: "South Indian"
+    //             }
+    //         },
+    //         quantity: 1,
+    //         status: "Preparing"
+    //     }
+    // ]
     return (
         <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -169,12 +179,12 @@ export default function TransitionsModal({ open, handleClose, table }) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {order_data.map((row) => (
+                                    {orderData.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
-                                                {row.item.name}
+                                                {row.Item.name}
                                             </StyledTableCell>
-                                            <StyledTableCell align="right">{row.item.category.name}</StyledTableCell>
+                                            <StyledTableCell align="right">{row.Item.category.name}</StyledTableCell>
                                             <StyledTableCell align="right">{row.quantity}</StyledTableCell>
                                             <StyledTableCell align="right" sx={{ color: getOrderStatusColor(row.status) }}>{row.status}</StyledTableCell>
                                             <StyledTableCell align="right">

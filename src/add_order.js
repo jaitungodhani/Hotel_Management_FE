@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button, TextField } from '@mui/material';
+import { categoryApi, itemApi } from './service/config';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -38,6 +39,8 @@ const selectcontrol = {
 }
 
 export default function AddOrderModal({ open, handleClose, table, rawData }) {
+    const [categoryData, setCategoryData] = React.useState([]);
+    const [ItemData, setItemData] = React.useState([]);
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState([]);
     const [subitem, setSubItem] = React.useState({});
@@ -46,18 +49,31 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
 
     React.useEffect(() => {
         if (rawData !== undefined) {
-            setCategory(rawData.item.category.id);
-            setItem(items.filter(i => i.category.id === rawData.item.category.id));
-            setSubItem(rawData.item.id);
+            setCategory(rawData.Item.category.id);
+            setItem(ItemData.filter(i => i.category.id === rawData.Item.category.id));
+            setSubItem(rawData.Item.id);
             setQuantity(rawData.quantity);
             setOrderBtn(true);
         }
+
+        categoryApi().then((res)=>{
+            setCategoryData(res.data.data)
+        },(error)=>{
+            console.log(error);
+        });
+
+        itemApi().then((res)=>{
+            setItemData(res.data.data)
+        },(error)=>{
+            console.log(error);
+        });
+
     }, [rawData])
 
 
     const handleChange = (event) => {
         setCategory(event.target.value);
-        setItem(items.filter(i => i.category.id === event.target.value))
+        setItem(ItemData.filter(i => i.category.id === event.target.value))
     };
 
     const handleItem = (event) => {
@@ -69,47 +85,48 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
         // console.log("::::::",event.target.value);
         setQuantity(event.target.value);
     };
-    const category_data = [
-        {
-            "id": 1,
-            "name": "punjabi"
-        },
-        {
-            "id": 2,
-            "name": "Gujarati"
-        },
-        {
-            "id": 3,
-            "name": "South Indian"
-        }
-    ]
+    // const category_data = [
+    //     {
+    //         "id": 1,
+    //         "name": "punjabi"
+    //     },
+    //     {
+    //         "id": 2,
+    //         "name": "Gujarati"
+    //     },
+    //     {
+    //         "id": 3,
+    //         "name": "South Indian"
+    //     }
+    // ]
 
-    const items = [
-        {
-            "id": 1,
-            "name": "Panir Tikka",
-            "category": {
-                "id": 1,
-                "name": "punjabi"
-            }
-        },
-        {
-            "id": 2,
-            "name": "Khichadi",
-            "category": {
-                "id": 2,
-                "name": "Gujarati"
-            }
-        },
-        {
-            "id": 3,
-            "name": "Maisure",
-            "category": {
-                "id": 3,
-                "name": "South Indian"
-            }
-        }
-    ]
+    // const items = [
+    //     {
+    //         "id": 1,
+    //         "name": "Panir Tikka",
+    //         "category": {
+    //             "id": 1,
+    //             "name": "punjabi"
+    //         }
+    //     },
+    //     {
+    //         "id": 2,
+    //         "name": "Khichadi",
+    //         "category": {
+    //             "id": 2,
+    //             "name": "Gujarati"
+    //         }
+    //     },
+    //     {
+    //         "id": 3,
+    //         "name": "Maisure",
+    //         "category": {
+    //             "id": 3,
+    //             "name": "South Indian"
+    //         }
+    //     }
+    // ]
+
     return (
         <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -140,7 +157,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                                 onChange={handleChange}
                                 disabled={rawData?true:false}
                             >
-                                {category_data.map((cat) => (
+                                {categoryData.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
                                 ))
 

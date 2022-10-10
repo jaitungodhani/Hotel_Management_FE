@@ -10,5 +10,17 @@ export const signIn = (payload) => {
 };
 
 export const tableApi = () => {
-    return instance.get(`/api/tabledata`);
+    return instance.get('/api/tabledata');
+}
+
+export const categoryApi=()=>{
+    return instance.get("/api/categorydata/");
+}
+
+export const itemApi =()=>{
+    return instance.get("/api/itemdata/");
+}
+
+export const orderApi =()=>{
+    return instance.get("/api/orderdata/");
 }
