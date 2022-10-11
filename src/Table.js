@@ -8,7 +8,7 @@ import AddOrderModal from './add_order';
 import { orderApi} from './service/config';
 
 
-const Table =({item})=>{
+const Table =({item,handleSnakbarClick})=>{
     const [open, setOpen] = React.useState(false);
     const [orderData,setOrderData]=React.useState([]);
     const handleOpen = () => {
@@ -26,6 +26,7 @@ const Table =({item})=>{
         setOrder(true);
 
     };
+    
     const handleaddorderClose = () => setOrder(false);
     return(
         <div className="table">
@@ -40,7 +41,7 @@ const Table =({item})=>{
             </div>
 
             <TransitionsModal open={open} handleClose={handleClose} table={item} orderData={orderData}/>
-            <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item}/>
+            <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item} handleSnakbarClick={handleSnakbarClick}/>
         </div>
     );
 }

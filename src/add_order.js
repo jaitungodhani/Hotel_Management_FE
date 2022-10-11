@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {Button, TextField } from '@mui/material';
+import { Button, Slide, Snackbar, TextField } from '@mui/material';
 import { categoryApi, itemApi, orderApiPost } from './service/config';
 
 const style = (theme) => ({
@@ -22,11 +22,11 @@ const style = (theme) => ({
     borderRadius: '15px',
     [theme.breakpoints.down('md')]: {
         width: '85%',
-        padding:'16px'
+        padding: '16px'
     },
     [theme.breakpoints.up('md')]: {
         width: '70%',
-        padding:'22px'
+        padding: '22px'
     },
     [theme.breakpoints.up('lg')]: {
         width: '50%',
@@ -38,15 +38,18 @@ const selectcontrol = {
     marginBottom: '10px'
 }
 
-export default function AddOrderModal({ open, handleClose, table, rawData }) {
+export default function AddOrderModal({ open, handleClose, table, rawData, handleSnakbarClick }) {
     const [categoryData, setCategoryData] = React.useState([]);
     const [ItemData, setItemData] = React.useState([]);
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState([]);
     const [subitem, setSubItem] = React.useState({});
-    const [quantity, setQuantity] = React.useState();
+    const [quantity, setQuantity] = React.useState(1);
     const [orderbtn, setOrderBtn] = React.useState(false);
-
+    // const [openSnakbar, setOpenSnakbar] = React.useState(false);
+    // const [transition, setTransition] = React.useState(undefined);
+    // const [snakbarmsg,setSnakbarMsg]=React.useState("");
+    // const [handleModelClose,sethandleModelClose]=React.useState(handleClose);
     React.useEffect(() => {
         if (rawData !== undefined) {
             setCategory(rawData.Item.category.id);
@@ -56,20 +59,23 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
             setOrderBtn(true);
         }
 
-        categoryApi().then((res)=>{
+        categoryApi().then((res) => {
             setCategoryData(res.data.data)
-        },(error)=>{
+        }, (error) => {
             console.log(error);
         });
 
-        itemApi().then((res)=>{
+        itemApi().then((res) => {
             setItemData(res.data.data)
-        },(error)=>{
+        }, (error) => {
             console.log(error);
         });
 
     }, [rawData])
 
+    function TransitionUp(props) {
+        return <Slide {...props} direction="up" />;
+    }
 
     const handleChange = (event) => {
         setCategory(event.target.value);
@@ -77,7 +83,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
     };
 
     const handleItem = (event) => {
-        // console.log("::::::",event.target.value);
+        console.log("::::::", event.target.value);
         setSubItem(event.target.value);
     };
 
@@ -86,17 +92,31 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
         setQuantity(event.target.value);
     };
 
-    const createOrder =()=>{
-        console.log(subitem.id,quantity,table.id);
-        orderApiPost({Item_id:subitem.id,quantity:quantity,table:table.id}).then((res)=>{
-            // alert(`Order Create Succeessfully at ${table.name}`)
-        },(error)=>{
-            console.log(error);
-        });
+    const createOrder = () => {
+        if (subitem!==undefined || !quantity) {
+            handleSnakbarClick(TransitionUp, "Fillup form correctly");
+        }
+        else {
+            orderApiPost({ Item_id: subitem, quantity: quantity, table: table.id }).then((res) => {
+                console.log("####", res.data.error);
+                if (res.data.error === false) {
+                    handleClose();
+                    // setSnakbarMsg("Order Create Successfully!!!");
+                    handleSnakbarClick(TransitionUp, "Order Create Successfully!!!!");
+                }
+                else {
+                    handleClose();
+                    // setSnakbarMsg("Error in order create");
+                    handleSnakbarClick(TransitionUp, "Error in Order Create");
+                }
+            }, (error) => {
+                handleSnakbarClick(TransitionUp, "Error in Order Create");
+            })
+        };
     }
 
-    const updateOrder =()=>{
-        orderApiPost().then(()=>{},()=>{});
+    const updateOrder = () => {
+        orderApiPost().then(() => { }, () => { });
     }
     return (
         <div>
@@ -126,7 +146,8 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                                 value={category}
                                 label="Category"
                                 onChange={handleChange}
-                                disabled={rawData?true:false}
+                                disabled={rawData ? true : false}
+                                required
                             >
                                 {categoryData.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
@@ -144,7 +165,8 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                                 value={subitem}
                                 label="Items"
                                 onChange={handleItem}
-                                disabled={rawData?true:false}
+                                disabled={rawData ? true : false}
+                                required
                             >
                                 {item.map((itm) => (
                                     <MenuItem key={itm.id} value={itm.id}>{itm.name}</MenuItem>
@@ -154,15 +176,22 @@ export default function AddOrderModal({ open, handleClose, table, rawData }) {
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                            <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} defaultValue="1" value={quantity} onChange={handleQuan}/>
+                            <TextField type="number" label="No of Items" InputProps={{ inputProps: { min: 0, max: 10 } }} value={quantity} onChange={handleQuan} required />
                         </FormControl>
 
                         <FormControl fullWidth sx={selectcontrol}>
-                            <Button onClick={orderbtn?updateOrder:createOrder} variant="contained">{orderbtn?"Update Order":"Create Order"}</Button>
+                            <Button onClick={orderbtn ? updateOrder : createOrder} variant="contained">{orderbtn ? "Update Order" : "Create Order"}</Button>
                         </FormControl>
                     </Box>
                 </Fade>
             </Modal>
+            {/* <Snackbar
+            open={openSnakbar}
+            onClose={handleSnakbarClose}
+            TransitionComponent={transition}
+            message={snakbarmsg}
+            key={transition ? transition.name : ''}
+            /> */}
         </div>
     );
 }
