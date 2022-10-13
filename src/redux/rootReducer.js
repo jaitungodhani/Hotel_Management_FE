@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
 
-import tableReducer from "./reducer";
+import {tableReducer,categoryReducer} from "./reducer";
 
 const rootReducer=combineReducers({
-    data:tableReducer
+    data:tableReducer,
+    category:categoryReducer
 })
 
 export default rootReducer;

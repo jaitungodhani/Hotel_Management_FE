@@ -16,11 +16,6 @@ const BaseTable = () => {
   const [snakbarmsg,setSnakbarMsg]=React.useState("");
 
   useEffect(()=>{
-    // tableApi().then((res)=>{
-    //   setTabledata(res.data.data)
-    // },(error)=>{
-    //   console.log(error);
-    // });
     dispatch(loadtablesStart())
   },[]);
   

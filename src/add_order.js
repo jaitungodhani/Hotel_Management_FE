@@ -9,6 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button, Slide, Snackbar, TextField } from '@mui/material';
 import { categoryApi, itemApi, orderApiPost } from './service/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadcategoryStart } from './redux/actions';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -39,7 +41,9 @@ const selectcontrol = {
 }
 
 export default function AddOrderModal({ open, handleClose, table, rawData, handleSnakbarClick }) {
-    const [categoryData, setCategoryData] = React.useState([]);
+    const dispatch=useDispatch();
+    // const [categoryData, setCategoryData] = React.useState([]);
+    const {categories}=useSelector((state)=>state.category);
     const [ItemData, setItemData] = React.useState([]);
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState([]);
@@ -59,12 +63,12 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
             setOrderBtn(true);
         }
 
-        categoryApi().then((res) => {
-            setCategoryData(res.data.data)
-        }, (error) => {
-            console.log(error);
-        });
-
+        // categoryApi().then((res) => {
+        //     setCategoryData(res.data.data)
+        // }, (error) => {
+        //     console.log(error);
+        // });
+        dispatch(loadcategoryStart());
         itemApi().then((res) => {
             setItemData(res.data.data)
         }, (error) => {
@@ -149,7 +153,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
                                 disabled={rawData ? true : false}
                                 required
                             >
-                                {categoryData.map((cat) => (
+                                {categories.map((cat) => (
                                     <MenuItem key={cat.id} value={cat.id}>{cat.name}</MenuItem>
                                 ))
 
