@@ -2,8 +2,8 @@ import {take,takeEvery,takeLatest,put,all,delay,fork,call} from "redux-saga/effe
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError} from "./actions";
-import {tableApi,categoryApi, itemsApi} from "./api";
+import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess} from "./actions";
+import {tableApi,categoryApi, itemsApi, orderApi} from "./api";
 
 
 export function* onLoadTableStartAsync(){
@@ -62,10 +62,36 @@ export function* onLoadItemStartAsync(){
 export function* onLoadItem(){
     yield takeEvery(types.LOAD_ITEM_START,onLoadItemStartAsync)
 }
+
+export function* onLoadOrderStartAsync(order_id){
+    try{
+        console.log(";;;;;;",order_id);
+        const response=yield call(orderApi,order_id)
+        console.log("ggggg",response);
+        if(response.status===200){
+            yield delay(200);
+            yield put(loadorderSuccess(response.data.data))
+        }
+    }
+    catch(error)
+    {
+        yield put(loadorderError(error.response.data))
+    }
+}
+
+export function* onLoadOrder(){
+    while(true){
+        const {payload:order_id}=yield take(types.LOAD_ORDER_START);
+        yield call(onLoadOrderStartAsync,order_id);
+    }
+
+    // yield takeEvery(types.LOAD_ORDER_START,call(onLoadOrderStartAsync,order_id))
+}
 const userSagas=[
     fork(onLoadTables),
     fork(onLoadCategory),
-    fork(onLoadItem)
+    fork(onLoadItem),
+    fork(onLoadOrder)
 ]
 
 export default function *rootSaga(){

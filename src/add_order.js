@@ -55,7 +55,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
     // const [snakbarmsg,setSnakbarMsg]=React.useState("");
     // const [handleModelClose,sethandleModelClose]=React.useState(handleClose);
 
-    console.log(",,,,,,", items);
+    // console.log(",,,,,,", items);
     React.useEffect(() => {
         if (rawData !== undefined) {
             setCategory(rawData.Item.category.id);

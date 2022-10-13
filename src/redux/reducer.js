@@ -18,6 +18,12 @@ const initialItemState = {
     error: null
 }
 
+const initialOrderState={
+    orders:[],
+    loading:false,
+    error:null
+}
+
 export const tableReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOAD_TABLES_START:
@@ -92,6 +98,30 @@ export const itemReducer = (state = initialItemState, action) => {
                 error: action.payload
             }
 
+        default:
+            return state
+    }
+}
+
+export const orderReducer=(state=initialOrderState,action)=>{
+    switch(action.type){
+        case types.LOAD_CATEGORY_START:
+            return {
+                ...state,
+                loading:true
+            }
+        case types.LOAD_CATEGORY_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                orders:action.payload
+            }
+        case types.LOAD_CATEGORY_ERROR:
+            return {
+                ...state,
+                loading:false,
+                error:action.payload
+            }
         default:
             return state
     }

@@ -11,3 +11,7 @@ export const categoryApi = async () => {
 export const itemsApi =async () =>{
     return await instance.get('/api/itemdata/');
 }
+
+export const orderApi =async (order_id)=>{
+    return await instance.get(`/api/orderdata/${order_id}`);
+}

@@ -5,26 +5,30 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import TransitionsModal from './show_order';
 import AddOrderModal from './add_order';
-import { orderApi} from './service/config';
+// import { orderApi} from './service/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadorderStart } from './redux/actions';
 
 
 const Table =({item,handleSnakbarClick})=>{
+    const dispatch=useDispatch();
     const [open, setOpen] = React.useState(false);
-    const [orderData,setOrderData]=React.useState([]);
+    
+    // const [orderData,setOrderData]=React.useState([]);
     const handleOpen = () => {
         setOpen(true);
-        orderApi(item.id).then((res)=>{
-            setOrderData(res.data.data);
-        },(error)=>{
-            console.log(error);
-        });
+        dispatch(loadorderStart(item.id));
+        // orderApi(item.id).then((res)=>{
+        //     setOrderData(res.data.data);
+        // },(error)=>{
+        //     console.log(error);
+        // });
     };
     const handleClose = () => setOpen(false);
 
     const [openaddorder, setOrder] = React.useState(false);
     const handleaddorderOpen = () => {
         setOrder(true);
-
     };
     
     const handleaddorderClose = () => setOrder(false);
@@ -40,7 +44,7 @@ const Table =({item,handleSnakbarClick})=>{
                 <button onClick={handleaddorderOpen}><AddCircleOutlineIcon /></button>
             </div>
 
-            <TransitionsModal open={open} handleClose={handleClose} table={item} orderData={orderData} handleSnakbarClick={handleSnakbarClick}/>
+            {open && <TransitionsModal open={open} handleClose={handleClose} table={item}  handleSnakbarClick={handleSnakbarClick}/>}
             <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item} handleSnakbarClick={handleSnakbarClick}/>
         </div>
     );

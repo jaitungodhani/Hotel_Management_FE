@@ -16,6 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
 import { IconButton } from '@mui/material';
 import DeleteOrderModal from './deleteOrderModel';
+import { useSelector } from 'react-redux';
 
 
 
@@ -86,6 +87,7 @@ export default function TransitionsModal({ open, handleClose, table, orderData,h
     const [deleteorder, setdeleteOrder] = React.useState(false);
     const [deleteorderdata, setDeleteOrderData] = React.useState();
     const [updateorderData, setUpdateorderData] = React.useState();
+    const {orders}=useSelector((state)=>state.orders);
     const handleUpdateOpen = (rowData) => {
         console.log(rowData);
         setupdateOrder(true);
@@ -138,7 +140,7 @@ export default function TransitionsModal({ open, handleClose, table, orderData,h
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {orderData.map((row) => (
+                                    {orders.map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell component="th" scope="row">
                                                 {row.Item.name}
