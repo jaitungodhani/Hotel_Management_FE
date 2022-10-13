@@ -4,7 +4,7 @@ import './basetable.css';
 import { Grid, Slide, Snackbar } from '@mui/material';
 // import { tableApi } from './service/config';
 import { useDispatch,useSelector } from 'react-redux';
-import { loadtablesStart } from './redux/actions';
+import { loadcategoryStart, loaditemStart, loadtablesStart } from './redux/actions';
 
 
 const BaseTable = () => {
@@ -16,7 +16,9 @@ const BaseTable = () => {
   const [snakbarmsg,setSnakbarMsg]=React.useState("");
 
   useEffect(()=>{
-    dispatch(loadtablesStart())
+    dispatch(loadtablesStart());
+    dispatch(loadcategoryStart());
+    dispatch(loaditemStart());
   },[]);
   
 

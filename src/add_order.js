@@ -7,10 +7,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Button, Slide, Snackbar, TextField } from '@mui/material';
-import { categoryApi, itemApi, orderApiPost } from './service/config';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadcategoryStart } from './redux/actions';
+import { Button, Slide, TextField } from '@mui/material';
+import { orderApiPost } from './service/config';
+import { useSelector } from 'react-redux';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -41,10 +40,11 @@ const selectcontrol = {
 }
 
 export default function AddOrderModal({ open, handleClose, table, rawData, handleSnakbarClick }) {
-    const dispatch=useDispatch();
+    // const dispatch = useDispatch();
     // const [categoryData, setCategoryData] = React.useState([]);
-    const {categories}=useSelector((state)=>state.category);
-    const [ItemData, setItemData] = React.useState([]);
+    const { categories } = useSelector((state) => state.category);
+    const {items}  = useSelector((state) => state.items);
+    // const [items, setitems] = React.useState([]);
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState([]);
     const [subitem, setSubItem] = React.useState({});
@@ -54,10 +54,12 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
     // const [transition, setTransition] = React.useState(undefined);
     // const [snakbarmsg,setSnakbarMsg]=React.useState("");
     // const [handleModelClose,sethandleModelClose]=React.useState(handleClose);
+
+    console.log(",,,,,,", items);
     React.useEffect(() => {
         if (rawData !== undefined) {
             setCategory(rawData.Item.category.id);
-            setItem(ItemData.filter(i => i.category.id === rawData.Item.category.id));
+            setItem(items.filter(i => i.category.id === rawData.Item.category.id));
             setSubItem(rawData.Item.id);
             setQuantity(rawData.quantity);
             setOrderBtn(true);
@@ -68,12 +70,11 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
         // }, (error) => {
         //     console.log(error);
         // });
-        dispatch(loadcategoryStart());
-        itemApi().then((res) => {
-            setItemData(res.data.data)
-        }, (error) => {
-            console.log(error);
-        });
+        // itemApi().then((res) => {
+        //     setitems(res.data.data)
+        // }, (error) => {
+        //     console.log(error);
+        // });
 
     }, [rawData])
 
@@ -83,7 +84,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
 
     const handleChange = (event) => {
         setCategory(event.target.value);
-        setItem(ItemData.filter(i => i.category.id === event.target.value))
+        setItem(items.filter(i => i.category.id === event.target.value))
     };
 
     const handleItem = (event) => {
@@ -97,7 +98,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
     };
 
     const createOrder = () => {
-        if (subitem===undefined || !quantity) {
+        if (subitem === undefined || !quantity) {
             handleSnakbarClick(TransitionUp, "Fillup form correctly");
         }
         else {

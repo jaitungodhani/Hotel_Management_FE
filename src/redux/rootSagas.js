@@ -2,8 +2,8 @@ import {take,takeEvery,takeLatest,put,all,delay,fork,call} from "redux-saga/effe
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError} from "./actions";
-import {tableApi,categoryApi} from "./api";
+import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError} from "./actions";
+import {tableApi,categoryApi, itemsApi} from "./api";
 
 
 export function* onLoadTableStartAsync(){
@@ -44,9 +44,28 @@ export function* onLoadCategory(){
     yield takeEvery(types.LOAD_CATEGORY_START,onLoadCategoryStartAsync)
 }
 
+export function* onLoadItemStartAsync(){
+    try{
+        const response= yield call(itemsApi);
+        if(response.status===200){
+            // console.log("dfcdfddfdfd",response.data.data);
+            yield delay(200);
+            yield put(loaditemSuccess(response.data.data))
+        }
+    }
+    catch(error){
+        yield put(loaditemError(error.response.data))
+    }
+}
+
+
+export function* onLoadItem(){
+    yield takeEvery(types.LOAD_ITEM_START,onLoadItemStartAsync)
+}
 const userSagas=[
     fork(onLoadTables),
-    fork(onLoadCategory)
+    fork(onLoadCategory),
+    fork(onLoadItem)
 ]
 
 export default function *rootSaga(){
