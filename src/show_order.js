@@ -15,6 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddOrderModal from './add_order';
 import { IconButton } from '@mui/material';
+import DeleteOrderModal from './deleteOrderModel';
+
 
 
 const style = (theme) => ({
@@ -79,9 +81,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function TransitionsModal({ open, handleClose, table,orderData }) {
+export default function TransitionsModal({ open, handleClose, table, orderData,handleSnakbarClick }) {
     const [updateorder, setupdateOrder] = React.useState(false);
-    // const [orderData,setOrderData]=React.useState([]);
+    const [deleteorder, setdeleteOrder] = React.useState(false);
+    const [deleteorderdata, setDeleteOrderData] = React.useState();
     const [updateorderData, setUpdateorderData] = React.useState();
     const handleUpdateOpen = (rowData) => {
         console.log(rowData);
@@ -89,7 +92,13 @@ export default function TransitionsModal({ open, handleClose, table,orderData })
         setUpdateorderData(rowData);
     }
     const handleUpdateClose = () => setupdateOrder(false);
-    
+
+    const handleDeleteOpen = (rawData) => {
+        setdeleteOrder(true);
+        setDeleteOrderData(rawData);
+    }
+
+    const handleDeleteClose = () => setdeleteOrder(false);
     // React.useEffect(()=>{
     //     orderApiPost({"table_id":table.id}).then((res)=>{
     //         console.log(res.data.data);
@@ -99,7 +108,7 @@ export default function TransitionsModal({ open, handleClose, table,orderData })
     //     });
     // },[]);
 
-    
+
     return (
         <div>
             {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -139,7 +148,10 @@ export default function TransitionsModal({ open, handleClose, table,orderData })
                                             <StyledTableCell align="right" sx={{ color: getOrderStatusColor(row.status) }}>{row.status}</StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <div>
-                                                    <IconButton><DeleteIcon sx={buttonstyledClasses.delete} /></IconButton>
+                                                    <IconButton>
+                                                        <DeleteIcon onClick={() => handleDeleteOpen(row)} sx={buttonstyledClasses.delete} />
+                                                    </IconButton>
+                                                    <DeleteOrderModal handleClose={handleDeleteClose} open={deleteorder} rawData={deleteorderdata} msg="Are you sure for delete order?" handleSnakbarClick={handleSnakbarClick}/>
                                                     <IconButton>
                                                         <EditIcon onClick={() => handleUpdateOpen(row)} sx={buttonstyledClasses.edit} /></IconButton>
                                                     <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table} />

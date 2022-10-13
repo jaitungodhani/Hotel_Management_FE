@@ -28,3 +28,7 @@ export const orderApi =(pk)=>{
 export const orderApiPost=(payload)=>{
     return instance.post("/api/orderdata/",payload);
 };
+
+export const orderApidelete=(uuid)=>{
+    return instance.delete(`/api/orderdata/${uuid}/`)
+}

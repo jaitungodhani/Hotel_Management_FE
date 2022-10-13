@@ -93,7 +93,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
     };
 
     const createOrder = () => {
-        if (subitem!==undefined || !quantity) {
+        if (subitem===undefined || !quantity) {
             handleSnakbarClick(TransitionUp, "Fillup form correctly");
         }
         else {

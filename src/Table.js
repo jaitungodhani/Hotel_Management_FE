@@ -40,7 +40,7 @@ const Table =({item,handleSnakbarClick})=>{
                 <button onClick={handleaddorderOpen}><AddCircleOutlineIcon /></button>
             </div>
 
-            <TransitionsModal open={open} handleClose={handleClose} table={item} orderData={orderData}/>
+            <TransitionsModal open={open} handleClose={handleClose} table={item} orderData={orderData} handleSnakbarClick={handleSnakbarClick}/>
             <AddOrderModal open={openaddorder} handleClose={handleaddorderClose} table={item} handleSnakbarClick={handleSnakbarClick}/>
         </div>
     );
