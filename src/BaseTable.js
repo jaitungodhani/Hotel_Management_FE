@@ -2,22 +2,26 @@ import React, { useEffect, useState } from 'react';
 import Table from './Table';
 import './basetable.css';
 import { Grid, Slide, Snackbar } from '@mui/material';
-import { tableApi } from './service/config';
-
+// import { tableApi } from './service/config';
+import { useDispatch,useSelector } from 'react-redux';
+import { loadtablesStart } from './redux/actions';
 
 
 const BaseTable = () => {
-  const [table_data,setTabledata]=useState([]);
+  const dispatch = useDispatch();
+  // const [table_data,setTabledata]=useState([]);
+  const {tables} = useSelector((state) => state.data);
   const [openSnakbar, setOpenSnakbar] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
   const [snakbarmsg,setSnakbarMsg]=React.useState("");
 
   useEffect(()=>{
-    tableApi().then((res)=>{
-      setTabledata(res.data.data)
-    },(error)=>{
-      console.log(error);
-    });
+    // tableApi().then((res)=>{
+    //   setTabledata(res.data.data)
+    // },(error)=>{
+    //   console.log(error);
+    // });
+    dispatch(loadtablesStart())
   },[]);
   
 
@@ -35,7 +39,7 @@ const BaseTable = () => {
 
     <div className='App'>
       <Grid container >
-        {table_data.map((item) => (
+        {tables.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={4}>
             <Table item={item} handleSnakbarClick={handleSnakbarClick}/>
           </Grid>

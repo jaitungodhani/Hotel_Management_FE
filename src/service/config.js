@@ -9,9 +9,9 @@ export const signIn = (payload) => {
     return axios.post(`${appConfig.appUrl}/auth_login/login/`, payload);
 };
 
-export const tableApi = () => {
-    return instance.get('/api/tabledata');
-}
+// export const tableApi = () => {
+//     return instance.get('/api/tabledata');
+// }
 
 export const categoryApi=()=>{
     return instance.get("/api/categorydata/");
