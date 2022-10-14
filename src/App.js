@@ -5,17 +5,11 @@ import Login from './Login';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from './service/ProtectedRoute';
-import store from './redux/store';
+// import store from './redux/store';
 
 
 
 function App() {
-
-  // useEffect(() => {
-  //   store.dispatch(loadUser());
-  //   getStripeApiKey();
-  // }, []);
-
   return (
     <div>
       <ToastContainer />
@@ -23,7 +17,7 @@ function App() {
         <Routes>
           <Route exact path='/waiter' element={
             // <ProtectedRoute user_type="waiter">
-            <BaseTable />
+              <BaseTable />
             // </ProtectedRoute>
           } />
           <Route exact path='/' element={
