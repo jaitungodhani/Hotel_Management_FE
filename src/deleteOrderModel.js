@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Backdrop, Button, Fade, Slide } from '@mui/material';
-import { orderApidelete } from './service/config';
+import { useDispatch } from 'react-redux';
+import { deleteorderStart } from './redux/actions';
 
 const style = (theme) => ({
   position: 'absolute',
@@ -30,7 +31,7 @@ const style = (theme) => ({
 
 export default function DeleteOrderModal({ open, handleClose, rawData, msg,handleSnakbarClick }) {
   console.log("Delete_data!!!!", rawData);
-
+  const dispatch=useDispatch();
   const modelClose=()=>{
     handleClose(false)
   }
@@ -39,13 +40,15 @@ export default function DeleteOrderModal({ open, handleClose, rawData, msg,handl
     return <Slide {...props} direction="up" />;
 } 
   const deleteOrderApi=()=>{
-    orderApidelete(rawData.id).then((res)=>{
       handleClose(false);
-      handleSnakbarClick(TransitionUp, "Order Delete Successfully!!!!");
-    },(error)=>{
-      handleClose(false);
-      handleSnakbarClick(TransitionUp, "Error in Order Delete Process");
-    });
+      dispatch(deleteorderStart(rawData.id));
+    // orderApidelete(rawData.id).then((res)=>{
+    //   handleClose(false);
+    //   handleSnakbarClick(TransitionUp, "Order Delete Successfully!!!!");
+    // },(error)=>{
+    //   handleClose(false);
+    //   handleSnakbarClick(TransitionUp, "Error in Order Delete Process");
+    // });
   }
   return (
     <div>

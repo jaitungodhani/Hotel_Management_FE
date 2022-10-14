@@ -2,8 +2,8 @@ import {take,takeEvery,takeLatest,put,all,delay,fork,call} from "redux-saga/effe
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess} from "./actions";
-import {tableApi,categoryApi, itemsApi, orderApi} from "./api";
+import { loadtablesSuccess,loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderStart, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError} from "./actions";
+import {tableApi,categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate} from "./api";
 
 
 export function* onLoadTableStartAsync(){
@@ -63,11 +63,9 @@ export function* onLoadItem(){
     yield takeEvery(types.LOAD_ITEM_START,onLoadItemStartAsync)
 }
 
-export function* onLoadOrderStartAsync(order_id){
+export function* onLoadOrderStartAsync({payload}){
     try{
-        console.log(";;;;;;",order_id);
-        const response=yield call(orderApi,order_id)
-        console.log("ggggg",response);
+        const response=yield call(orderApi,payload)
         if(response.status===200){
             yield delay(200);
             yield put(loadorderSuccess(response.data.data))
@@ -80,18 +78,74 @@ export function* onLoadOrderStartAsync(order_id){
 }
 
 export function* onLoadOrder(){
-    while(true){
-        const {payload:order_id}=yield take(types.LOAD_ORDER_START);
-        yield call(onLoadOrderStartAsync,order_id);
-    }
-
-    // yield takeEvery(types.LOAD_ORDER_START,call(onLoadOrderStartAsync,order_id))
+    yield takeEvery(types.LOAD_ORDER_START,onLoadOrderStartAsync)
 }
+
+export function* onDeleteOrderStartAsync({payload}){
+    try{
+        console.log("kdsjdkjf",payload);
+        const response=yield call(orderApidelete,payload)
+        if(response.status===200){
+            yield delay(200);
+            yield put(deleteorderSuccess(payload));
+        }
+    }
+    catch(error){
+        yield put(deleteorderError(error.response.data));
+    }
+}
+
+
+export function* onDeleteOrder(){
+    yield takeEvery(types.DELETE_ORDER_START,onDeleteOrderStartAsync)
+}
+
+export function* onCreateOrderStartAsync({payload}){
+    try{
+        const response=yield call(orderApiPost,payload);
+        if(response.status===200){
+            yield delay(200);
+            console.log("mmmmmmm",response.data.data);
+            yield put(createorderSuccess(response.data.data));
+        }
+    }
+    catch(error){
+        yield put(createorderError(error.response.data));
+    }
+}
+
+
+export function* onCreateOrder(){
+    yield takeEvery(types.CREATE_ORDER_START,onCreateOrderStartAsync)
+}
+
+export function* onUpdateOrderStartAsync({payload:{id,order_update_data}}){
+    try{
+        const response=yield call(orderApiUpdate,id,order_update_data);
+        if(response.status===200){
+            yield delay(200);
+            console.log("mmmmmmm",response.data.data);
+            yield put(updateorderSuccess(response.data.data));
+        }
+    }
+    catch(error){
+        yield put(updateorderError(error.response.data));
+    }
+}
+
+
+export function* onUpdateOrder(){
+    yield takeEvery(types.UPDATE_ORDER_START,onUpdateOrderStartAsync)
+}
+
 const userSagas=[
     fork(onLoadTables),
     fork(onLoadCategory),
     fork(onLoadItem),
-    fork(onLoadOrder)
+    fork(onLoadOrder),
+    fork(onDeleteOrder),
+    fork(onCreateOrder),
+    fork(onUpdateOrder)
 ]
 
 export default function *rootSaga(){

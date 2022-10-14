@@ -13,16 +13,9 @@ import { loadorderStart } from './redux/actions';
 const Table =({item,handleSnakbarClick})=>{
     const dispatch=useDispatch();
     const [open, setOpen] = React.useState(false);
-    
-    // const [orderData,setOrderData]=React.useState([]);
     const handleOpen = () => {
         setOpen(true);
         dispatch(loadorderStart(item.id));
-        // orderApi(item.id).then((res)=>{
-        //     setOrderData(res.data.data);
-        // },(error)=>{
-        //     console.log(error);
-        // });
     };
     const handleClose = () => setOpen(false);
 

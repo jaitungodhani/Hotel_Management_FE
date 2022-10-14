@@ -8,8 +8,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button, Slide, TextField } from '@mui/material';
-import { orderApiPost } from './service/config';
-import { useSelector } from 'react-redux';
+// import { orderApiPost } from './service/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { createorderStart, updateorderStart } from './redux/actions';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -40,10 +41,10 @@ const selectcontrol = {
 }
 
 export default function AddOrderModal({ open, handleClose, table, rawData, handleSnakbarClick }) {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     // const [categoryData, setCategoryData] = React.useState([]);
     const { categories } = useSelector((state) => state.category);
-    const {items}  = useSelector((state) => state.items);
+    const { items } = useSelector((state) => state.items);
     // const [items, setitems] = React.useState([]);
     const [category, setCategory] = React.useState('');
     const [item, setItem] = React.useState([]);
@@ -102,26 +103,29 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
             handleSnakbarClick(TransitionUp, "Fillup form correctly");
         }
         else {
-            orderApiPost({ Item_id: subitem, quantity: quantity, table: table.id }).then((res) => {
-                console.log("####", res.data.error);
-                if (res.data.error === false) {
-                    handleClose();
-                    // setSnakbarMsg("Order Create Successfully!!!");
-                    handleSnakbarClick(TransitionUp, "Order Create Successfully!!!!");
-                }
-                else {
-                    handleClose();
-                    // setSnakbarMsg("Error in order create");
-                    handleSnakbarClick(TransitionUp, "Error in Order Create");
-                }
-            }, (error) => {
-                handleSnakbarClick(TransitionUp, "Error in Order Create");
-            })
+            // orderApiPost({ Item_id: subitem, quantity: quantity, table: table.id }).then((res) => {
+            //     console.log("####", res.data.error);
+            //     if (res.data.error === false) {
+            //         handleClose();
+            //         // setSnakbarMsg("Order Create Successfully!!!");
+            //         handleSnakbarClick(TransitionUp, "Order Create Successfully!!!!");
+            //     }
+            //     else {
+            //         
+            //         // setSnakbarMsg("Error in order create");
+            //         handleSnakbarClick(TransitionUp, "Error in Order Create");
+            //     }
+            // }, (error) => {
+            //     handleSnakbarClick(TransitionUp, "Error in Order Create");
+            // })
+            handleClose();
+            dispatch(createorderStart({ Item_id: subitem, quantity: quantity, table: table.id }));
         };
     }
 
     const updateOrder = () => {
-        orderApiPost().then(() => { }, () => { });
+        dispatch(updateorderStart({ id: rawData.id, order_update_data: { quantity } }));
+        handleClose();
     }
     return (
         <div>

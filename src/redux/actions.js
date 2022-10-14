@@ -42,8 +42,9 @@ export const loaditemError=(error)=>({
     payload:error
 });
 
-export const loadorderStart=()=>({
-    type:types.LOAD_ORDER_START
+export const loadorderStart=(table_id)=>({
+    type:types.LOAD_ORDER_START,
+    payload:table_id
 });
 
 export const loadorderSuccess=(orders)=>({
@@ -53,5 +54,50 @@ export const loadorderSuccess=(orders)=>({
 
 export const loadorderError=(error)=>({
     type:types.LOAD_ORDER_ERROR,
+    payload:error
+})
+
+export const deleteorderStart=(order_id)=>({
+    type:types.DELETE_ORDER_START,
+    payload:order_id
+});
+
+export const deleteorderSuccess=(order_id)=>({
+    type:types.DELETE_ORDER_SUCCESS,
+    payload:order_id
+});
+
+export const deleteorderError=(error)=>({
+    type:types.DELETE_ORDER_ERROR,
+    payload:error
+})
+
+export const createorderStart=(new_order_data)=>({
+    type:types.CREATE_ORDER_START,
+    payload:new_order_data
+});
+
+export const createorderSuccess=(new_order_data)=>({
+    type:types.CREATE_ORDER_SUCCESS,
+    payload:new_order_data
+});
+
+export const createorderError=(error)=>({
+    type:types.CREATE_ORDER_ERROR,
+    payload:error
+})
+
+export const updateorderStart=(order_data)=>({
+    type:types.UPDATE_ORDER_START,
+    payload:order_data
+});
+
+export const updateorderSuccess=(order_data)=>({
+    type:types.UPDATE_ORDER_SUCCESS,
+    payload:order_data
+});
+
+export const updateorderError=(error)=>({
+    type:types.UPDATE_ORDER_ERROR,
     payload:error
 })

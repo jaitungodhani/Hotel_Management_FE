@@ -105,18 +105,46 @@ export const itemReducer = (state = initialItemState, action) => {
 
 export const orderReducer=(state=initialOrderState,action)=>{
     switch(action.type){
-        case types.LOAD_CATEGORY_START:
+        case types.LOAD_ORDER_START:
+        case types.DELETE_ORDER_START:
+        case types.CREATE_ORDER_START:
+        case types.UPDATE_ORDER_START:
             return {
                 ...state,
                 loading:true
             }
-        case types.LOAD_CATEGORY_SUCCESS:
+        case types.CREATE_ORDER_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                orders:[...state.orders.concat(action.payload)]
+            }
+        case types.DELETE_ORDER_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                orders:state.orders.filter((i)=>i.id !== action.payload)
+            }
+        case types.LOAD_ORDER_SUCCESS:
             return {
                 ...state,
                 loading:false,
                 orders:action.payload
             }
-        case types.LOAD_CATEGORY_ERROR:
+        case types.UPDATE_ORDER_SUCCESS:
+            const index=state.orders.findIndex((order)=>order.id===action.payload.id);
+            const neworderArray=[...state.orders];
+            console.log("fffff",action.payload);
+            neworderArray[index]=action.payload;
+            return {
+                ...state,
+                loading:false,
+                orders:neworderArray
+            }
+        case types.LOAD_ORDER_ERROR:
+        case types.DELETE_ORDER_ERROR:
+        case types.CREATE_ORDER_ERROR:
+        case types.UPDATE_ORDER_ERROR:
             return {
                 ...state,
                 loading:false,
@@ -126,3 +154,4 @@ export const orderReducer=(state=initialOrderState,action)=>{
             return state
     }
 }
+
