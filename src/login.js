@@ -1,5 +1,5 @@
-import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Button, ButtonGroup, TextField } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import "./login.css";
 import login_img from "./Image/login_img.png";
 import IconButton from '@mui/material/IconButton';
@@ -11,30 +11,18 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // import { signIn } from "./service/config";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
 import { signIn } from "./service/config";
+import { useDispatch, useSelector } from "react-redux";
+import { loginStart } from "./redux/actions";
+
 
 
 
 const Login = () => {
   const [username, setUsername] = useState('');
-  // const [password,setPassword]=useState('');
-  const navigate = useNavigate()
-  useEffect(() => {
-    const user_data = JSON.parse(localStorage.getItem('user_data'));
-    if (user_data) {
-      const access_token = localStorage.getItem('access_token');
-      if (access_token) {
-        navigate("/order");
-      }
-      else{
-        localStorage.clear();
-      }
-    }
-    else{
-      localStorage.clear();
-    }
-  }, []);
+  const [waiter, setWaiter] = useState(true);
+  const [manager, setManager] = useState(false);
+  const [billdesk, setBilldesk] = useState(false);
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -42,6 +30,51 @@ const Login = () => {
     weightRange: '',
     showPassword: false,
   });
+
+
+
+  const { user } = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+
+  const handleWaiter = () => {
+    setWaiter(true);
+    setManager(false);
+    setBilldesk(false);
+    console.log(waiter, manager, billdesk);
+  }
+
+  const handleManager = () => {
+    setWaiter(false);
+    setManager(true);
+    setBilldesk(false);
+    console.log(waiter, manager, billdesk);
+  }
+
+  const handleBilldesk = () => {
+    setWaiter(false);
+    setManager(false);
+    setBilldesk(true);
+    console.log(waiter, manager, billdesk);
+  }
+
+  useEffect(() => {
+    console.log(user);
+    if (user) {
+      if (user.user_type === "waiter") {
+        console.log(";;;;;;");
+        navigate("/waiter")
+      } else if (user.user_type === "manager") {
+        navigate("/manager")
+      } else if (user.user_type === "billdesk") {
+        navigate("/billdesk")
+      }
+    }
+  }, [user]);
+
+
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -59,21 +92,19 @@ const Login = () => {
   };
 
   const userLogin = () => {
-    console.log(":::", username, values.password);
-    signIn({ username, password: values.password }).then((res) => {
-      localStorage.setItem("access_token", res.data.data.access_token);
-      localStorage.setItem("refresh_token", res.data.data.refresh_token);
-      localStorage.setItem("user_data", JSON.stringify(res.data.data.user_data));
-      if (res.data.data.user_data.is_owner) {
-        navigate("/owner")
-      } else if (res.data.data.user_data.is_manager) {
-        navigate("/manager")
-      } else {
-        navigate("/order")
-      }
-    }, (error) => {
-      console.log(error?.response?.data?.message);
-    })
+    // console.log(":::", username, values.password);
+    let role = "";
+    if (waiter) {
+      role = "waiter"
+    }
+    else if (manager) {
+      role = "manager"
+    }
+    else if (billdesk) {
+      role = "billdesk"
+    }
+    dispatch(loginStart({ username, password: values.password, role: role }));
+    console.log("++++++", user);
   };
   return (
     <div className="login_page">
@@ -103,6 +134,14 @@ const Login = () => {
           />
         </FormControl>
 
+        <FormControl>
+          <ButtonGroup variant="contained" aria-label="outlined primary button group" sx={{ mb: 3 }}>
+            <Button onClick={handleWaiter} sx={{ background: waiter && "green" }}>Waiter</Button>
+            <Button onClick={handleManager} sx={{ background: manager && "green" }}>Manager</Button>
+            <Button onClick={handleBilldesk} sx={{ background: billdesk && "green" }}>Bill Desk</Button>
+          </ButtonGroup>
+
+        </FormControl>
         <FormControl>
           <Button variant="contained" onClick={userLogin}>Login</Button>
         </FormControl>

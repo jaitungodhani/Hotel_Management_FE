@@ -1,5 +1,12 @@
 import * as types from "./actionTypes";
 
+
+const initialUserState={
+    user:{},
+    loading:false,
+    error:null
+}
+
 const initialState = {
     tables: [],
     loading: false,
@@ -22,6 +29,32 @@ const initialOrderState={
     orders:[],
     loading:false,
     error:null
+}
+
+export const userReducer=(state=initialUserState,action)=>{
+    switch(action.type){
+        case types.LOGIN_START:
+            return {
+                ...state,
+                loading: true
+            }
+        
+        case types.LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                user:action.payload
+            }
+        
+        case types.LOGIN_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
 }
 
 export const tableReducer = (state = initialState, action) => {

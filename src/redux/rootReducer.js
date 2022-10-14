@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
 
-import {tableReducer,categoryReducer, itemReducer, orderReducer} from "./reducer";
+import {tableReducer,categoryReducer, itemReducer, orderReducer, userReducer} from "./reducer";
 
 const rootReducer=combineReducers({
+    user:userReducer,
     data:tableReducer,
     category:categoryReducer,
     items:itemReducer,

@@ -1,5 +1,20 @@
 import * as types from "./actionTypes";
 
+export const loginStart=(payload)=>({
+    type:types.LOGIN_START,
+    payload:payload
+});
+
+export const loginSuccess=(payload)=>({
+    type:types.LOGIN_SUCCESS,
+    payload:payload
+});
+
+export const loginError=(error)=>({
+    type:types.LOGIN_ERROR,
+    payload:error
+});
+
 export const loadtablesStart=()=>({
     type:types.LOAD_TABLES_START,
 });
