@@ -15,6 +15,20 @@ export const loginError=(error)=>({
     payload:error
 });
 
+export const isloginStart=()=>({
+    type:types.IS_LOGIN_START
+});
+
+export const isloginSuccess=(payload)=>({
+    type:types.IS_LOGIN_SUCCESS,
+    payload:payload
+});
+
+export const isloginError=(error)=>({
+    type:types.IS_LOGIN_ERROR,
+    payload:error
+});
+
 export const loadtablesStart=()=>({
     type:types.LOAD_TABLES_START,
 });

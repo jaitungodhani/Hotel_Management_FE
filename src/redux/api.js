@@ -11,6 +11,10 @@ export const signIn = async (payload) => {
     return await axios.post(`${appConfig.appUrl}/auth_login/login/`, payload);
 };
 
+export const isLoginApi = async () => {
+    return await instance.get('/auth_login/is_login/');
+}
+
 export const tableApi = async () => {
     return await instance.get('/api/tabledata');
 }

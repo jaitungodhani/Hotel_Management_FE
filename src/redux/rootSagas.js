@@ -2,9 +2,27 @@ import { take, takeEvery, takeLatest, put, all, delay, fork, call } from "redux-
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError } from "./actions";
-import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn } from "./api";
+import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess } from "./actions";
+import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi } from "./api";
 import { toast } from "react-toastify";
+
+export function* onLoadISLoginStartAsync() {
+    try {
+        const response = yield call(isLoginApi);
+        console.log("response", response);
+        if (response.status === 200) {
+            yield delay(500);
+            yield put(isloginSuccess(response.data.data))
+        } 
+    }
+    catch (error) {
+        yield put(loginError(error.response.data))
+    }
+}
+
+export function* onISLoadLogin() {
+    yield takeEvery(types.IS_LOGIN_START, onLoadISLoginStartAsync)
+}
 
 
 export function* onLoadLoginStartAsync({ payload }) {
@@ -174,6 +192,7 @@ export function* onUpdateOrder() {
 }
 
 const userSagas = [
+    fork(onISLoadLogin),
     fork(onLoadLogin),
     fork(onLoadTables),
     fork(onLoadCategory),

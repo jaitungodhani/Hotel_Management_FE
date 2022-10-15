@@ -34,18 +34,19 @@ const initialOrderState={
 export const userReducer=(state=initialUserState,action)=>{
     switch(action.type){
         case types.LOGIN_START:
+        case types.IS_LOGIN_START:
             return {
                 ...state,
                 loading: true
             }
-        
+        case types.IS_LOGIN_SUCCESS:
         case types.LOGIN_SUCCESS:
             return {
                 ...state,
                 loading:false,
                 user:action.payload
             }
-        
+        case types.IS_LOGIN_ERROR:
         case types.LOGIN_ERROR:
             return {
                 ...state,
