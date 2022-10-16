@@ -1,0 +1,55 @@
+.order{
+    background-color: rgb(69, 142, 69);
+    color: white;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
+
+.order .top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 10px 0px 10px;
+}
+
+.order .tablename{
+    padding: 10px 20px 20px 20px;
+    background-color: hsl(0, 0%, 9%);
+    color: burlywood;
+}
+
+.order .orderquan{
+    padding: 10px 20px 20px 20px;
+    background-color: burlywood;
+    color: hsl(0, 0%, 9%);
+}
+.order .upper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 40px 40px 40px;
+}
+
+.order .bottom{
+    display: flex;
+    flex-direction: row;
+}
+
+.order .bottom button{
+    width: 100%;
+    background-color: hsl(0, 0%, 9%);
+    color: rgb(191, 185, 171);
+    height: 40px;
+    border: none;
+}
+
+.order .bottom button:hover {
+    transition: 300ms ease-in;
+    background-color: #484848;
+    cursor: pointer;
+}

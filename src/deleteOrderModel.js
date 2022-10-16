@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Backdrop, Button, Fade, Slide } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { deleteorderStart } from './redux/actions';
+import { deleteorderStart, loadtablesStart } from './redux/actions';
 
 const style = (theme) => ({
   position: 'absolute',
@@ -42,6 +42,7 @@ export default function DeleteOrderModal({ open, handleClose, rawData, msg,handl
   const deleteOrderApi=()=>{
       handleClose(false);
       dispatch(deleteorderStart(rawData.id));
+      dispatch(loadtablesStart());
     // orderApidelete(rawData.id).then((res)=>{
     //   handleClose(false);
     //   handleSnakbarClick(TransitionUp, "Order Delete Successfully!!!!");

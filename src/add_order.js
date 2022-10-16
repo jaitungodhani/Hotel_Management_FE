@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 import { Button, Slide, TextField } from '@mui/material';
 // import { orderApiPost } from './service/config';
 import { useDispatch, useSelector } from 'react-redux';
-import { createorderStart, updateorderStart } from './redux/actions';
+import { createorderStart, loadtablesStart, updateorderStart } from './redux/actions';
 
 const style = (theme) => ({
     position: 'absolute',
@@ -120,11 +120,13 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
             // })
             handleClose();
             dispatch(createorderStart({ Item_id: subitem, quantity: quantity, table: table.id }));
+            dispatch(loadtablesStart());
         };
     }
 
     const updateOrder = () => {
         dispatch(updateorderStart({ id: rawData.id, order_update_data: { quantity } }));
+        dispatch(loadtablesStart());
         handleClose();
     }
     return (

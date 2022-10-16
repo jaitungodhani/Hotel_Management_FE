@@ -7,34 +7,35 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from 'react';
 import { isloginStart} from "./redux/actions";
 import { useDispatch } from 'react-redux';
+import Manager from './pages/Manager';
 
-import ProtectedRoute from './service/ProtectedRoute';
+// import ProtectedRoute from './service/ProtectedRoute';
 // import store from './redux/store';
 
 
 
 function App() {
   const dispatch = useDispatch();
-  dispatch(isloginStart());
+  // dispatch(isloginStart());
   return (
     <div>
       <ToastContainer />
       <Router>
         <Routes>
           <Route path='/waiter' element={
-            <ProtectedRoute user_type="waiter">
+            // <ProtectedRoute user_type="waiter">
               <BaseTable />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           } />
           <Route path='/manager' element={
-            <ProtectedRoute user_type="manager">
-              <BaseTable />
-            </ProtectedRoute>
+            // <ProtectedRoute user_type="manager">
+              <Manager />
+            // </ProtectedRoute>
           } />
           <Route path='/billdesk' element={
-            <ProtectedRoute user_type="billdesk">
+            // <ProtectedRoute user_type="billdesk">
               <BaseTable />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           } />
           <Route exact path='/' element={
             <Login />

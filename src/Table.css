@@ -4,18 +4,17 @@
     width: 95%;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 10px;margin-bottom: 10px;
-    background-color: #181818;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: hsl(0, 0%, 9%);
     /* position: relative; */
     border-radius: 7px;
-
 }
 
 
 .table .upper {
     display: flex;
     flex-direction: row;
-    padding: 30px;
     justify-content: center;
     align-items: center;
 }

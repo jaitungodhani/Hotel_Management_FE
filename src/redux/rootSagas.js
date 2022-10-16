@@ -2,8 +2,8 @@ import { take, takeEvery, takeLatest, put, all, delay, fork, call } from "redux-
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess } from "./actions";
-import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi } from "./api";
+import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess, managerorderStart, managerorderError, managerorderSuccess } from "./actions";
+import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi, orderApiget } from "./api";
 import { toast } from "react-toastify";
 
 export function* onLoadISLoginStartAsync() {
@@ -191,6 +191,29 @@ export function* onUpdateOrder() {
     yield takeEvery(types.UPDATE_ORDER_START, onUpdateOrderStartAsync)
 }
 
+export function* onManagerOrderStartAsync() {
+    try {
+        const response = yield call(orderApiget);
+        if (response.status === 200) {
+            yield delay(200);
+            // toast.success("Update Order Successfully!!!!", { theme: "colored" });
+            yield put(managerorderSuccess(response.data.data));
+        }
+        else {
+            // toast.error("Error in Update Order!!!", { theme: "colored" });
+            yield put(managerorderError(response.data.message));
+        }
+    }
+    catch (error) {
+        yield put(managerorderError(error.response.data));
+    }
+}
+
+
+export function* onManagerOrder() {
+    yield takeEvery(types.MANAGER_ORDER_START, onManagerOrderStartAsync)
+}
+
 const userSagas = [
     fork(onISLoadLogin),
     fork(onLoadLogin),
@@ -200,7 +223,8 @@ const userSagas = [
     fork(onLoadOrder),
     fork(onDeleteOrder),
     fork(onCreateOrder),
-    fork(onUpdateOrder)
+    fork(onUpdateOrder),
+    fork(onManagerOrder),
 ]
 
 export default function* rootSaga() {

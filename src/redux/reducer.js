@@ -31,6 +31,12 @@ const initialOrderState={
     error:null
 }
 
+const initialManagerOrderState={
+    orders:[],
+    loading:false,
+    error:null
+}
+
 export const userReducer=(state=initialUserState,action)=>{
     switch(action.type){
         case types.LOGIN_START:
@@ -189,3 +195,26 @@ export const orderReducer=(state=initialOrderState,action)=>{
     }
 }
 
+export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
+    switch(action.type){
+        case types.MANAGER_ORDER_START:
+            return {
+                ...state,
+                loading:true
+            }
+        case types.MANAGER_ORDER_SUCCESS:
+            return {
+                ...state,
+                loading:false,
+                orders:action.payload
+            }
+        case types.MANAGER_ORDER_ERROR:
+            return {
+                ...state,
+                loading:false,
+                orders:action.error
+            }
+        default:
+            return state
+    }
+}

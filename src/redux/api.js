@@ -27,6 +27,10 @@ export const itemsApi = async () => {
     return await instance.get('/api/itemdata/');
 }
 
+export const orderApiget=async () => {
+    return await instance.get(`/api/orderdata/`);
+};
+
 export const orderApi = async (table_id) => {
     return await instance.get(`/api/orderdata/${table_id}`);
 }
