@@ -144,3 +144,18 @@ export const managerorderError=(error)=>({
     type:types.MANAGER_ORDER_ERROR,
     payload:error
 })
+
+export const managerorderupdateStart=(order_data)=>({
+    type:types.MANAGER_ORDER_UPDATE_START,
+    payload:order_data
+});
+
+export const managerorderupdateSuccess=(order_data)=>({
+    type:types.MANAGER_ORDER_UPDATE_SUCCESS,
+    payload:order_data
+});
+
+export const managerorderupdateError=(error)=>({
+    type:types.MANAGER_ORDER_UPDATE_ERROR,
+    payload:error
+})

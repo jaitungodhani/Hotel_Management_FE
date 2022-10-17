@@ -198,6 +198,7 @@ export const orderReducer=(state=initialOrderState,action)=>{
 export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
     switch(action.type){
         case types.MANAGER_ORDER_START:
+        case types.MANAGER_ORDER_UPDATE_START:
             return {
                 ...state,
                 loading:true
@@ -208,7 +209,18 @@ export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
                 loading:false,
                 orders:action.payload
             }
+        case types.MANAGER_ORDER_UPDATE_SUCCESS:
+            const index=state.orders.findIndex((order)=>order.id===action.payload.id);
+            const neworderArray=[...state.orders];
+            console.log("fffff",action.payload);
+            neworderArray[index]=action.payload;
+            return {
+                ...state,
+                loading:false,
+                orders:neworderArray
+            }
         case types.MANAGER_ORDER_ERROR:
+        case types.MANAGER_ORDER_UPDATE_ERROR:
             return {
                 ...state,
                 loading:false,

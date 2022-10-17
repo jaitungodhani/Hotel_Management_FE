@@ -8,7 +8,7 @@ import AddOrderModal from "./add_order";
 // import { orderApi} from './service/config';
 import { useDispatch, useSelector } from "react-redux";
 import { loadorderStart } from "./redux/actions";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer,Tooltip } from "recharts";
+import { PieChart, Pie, Cell,Tooltip } from "recharts";
 
 // const data = [
 //   { name: "Waiting", value:4},

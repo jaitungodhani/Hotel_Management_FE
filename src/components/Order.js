@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./order.css";
 import PendingIcon from '@mui/icons-material/Pending';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import KitchenIcon from '@mui/icons-material/Kitchen';
+import { useDispatch } from "react-redux";
+import { managerorderupdateStart } from "../redux/actions";
 
 const Order=({particular_order})=>{
+    const dispatch=useDispatch();
     const [orderStatus,setOrderStatus]=useState(particular_order.status);
+    const [callApi,setCallAPI]=useState(false);
+    useEffect(()=>{
+      if(callApi){
+        dispatch(managerorderupdateStart({id:particular_order.id,order_update_data:{"status":orderStatus}}));
+      }
+    },[orderStatus]);
     const setWaitingStatus=()=>{
         setOrderStatus("Waiting");
+        setCallAPI(true);
     }
     const setProcessingStatus=()=>{
         setOrderStatus("Processing");
+        setCallAPI(true);
     }
     const setCompletedStatus=()=>{
         setOrderStatus("Completed");
+        setCallAPI(true);
     }
     return(
         <div className="order">
