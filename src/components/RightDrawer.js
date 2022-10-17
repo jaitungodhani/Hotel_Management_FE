@@ -18,8 +18,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import MultipleSelectChip from './Filter';
+import { useDispatch, useSelector } from 'react-redux';
+import { loaditemStart, loadtablesStart } from '../redux/actions';
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -69,7 +72,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const Items=useSelector((state)=>state.items);
+  const Tables=useSelector((state)=>state.data);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -78,6 +82,7 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+  // console.log(Items);
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -117,16 +122,9 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+           <MultipleSelectChip name="Table" data={Tables} />
+          <MultipleSelectChip name="Item" data={Items}/>
+          <MultipleSelectChip name="Status" data={[{id:1,name:"Waiting"},{id:2,name:"Processing"},{id:3,name:"Completed"}]} />
         </List>
       </Drawer>
     </Box>
