@@ -1,5 +1,5 @@
 .order{
-    background-color: rgb(69, 142, 69);
+    background-color: #484848;
     color: white;
     width: 95%;
     margin-right: auto;
@@ -48,8 +48,8 @@
     border: none;
 }
 
-.order .bottom button:hover {
+/* .order .bottom button:hover {
     transition: 300ms ease-in;
     background-color: #484848;
     cursor: pointer;
-}
+} */
