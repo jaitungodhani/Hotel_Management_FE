@@ -12,15 +12,15 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+// import ListItem from '@mui/material/ListItem';
+// import ListItemButton from '@mui/material/ListItemButton';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import ListItemText from '@mui/material/ListItemText';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import MailIcon from '@mui/icons-material/Mail';
 import MultipleSelectChip from './Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { loaditemStart, loadtablesStart } from '../redux/actions';
+// import { loaditemStart, loadtablesStart } from '../redux/actions';
 
 const drawerWidth = 270;
 
@@ -72,8 +72,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const Items=useSelector((state)=>state.items);
-  const Tables=useSelector((state)=>state.data);
+  const {items}=useSelector((state)=>state.items);
+  const {tables}=useSelector((state)=>state.data);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -122,8 +122,8 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-           <MultipleSelectChip name="Table" data={Tables} />
-          <MultipleSelectChip name="Item" data={Items}/>
+          <MultipleSelectChip name="Table" data={tables} />
+          <MultipleSelectChip name="Item" data={items}/>
           <MultipleSelectChip name="Status" data={[{id:1,name:"Waiting"},{id:2,name:"Processing"},{id:3,name:"Completed"}]} />
         </List>
       </Drawer>

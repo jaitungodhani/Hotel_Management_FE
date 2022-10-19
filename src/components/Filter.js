@@ -42,11 +42,12 @@ function getStyles(name, personName, theme) {
 }
 
 export default function MultipleSelectChip({name,data}) {
-console.log("@#$#%#%#",name,data);
+// console.log("@#$#%#%#",name,data);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
+    console.log("*******",event.target.value);
     const {
       target: { value },
     } = event;
@@ -76,10 +77,10 @@ console.log("@#$#%#%#",name,data);
           )}
           MenuProps={MenuProps}
         >
-          {data.map((n) => (
+          {data?.map((n) => (
             <MenuItem
               key={n.id}
-              value={n.id}
+              value={n.name}
               style={getStyles(n, personName, theme)}
             >
               {n.name}
