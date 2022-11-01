@@ -16,6 +16,7 @@ const Manager = () => {
   },[]);
   return (
     <div>
+      <PersistentDrawerLeft />
       <Grid container sx={{mt:9}}>
         {orders.map((i) => (
           <Grid i xs={12} sm={6} md={4} lg={4}>
@@ -23,7 +24,7 @@ const Manager = () => {
           </Grid>
         ))}
       </Grid>
-      <PersistentDrawerLeft />
+      
     </div>
   );
 };

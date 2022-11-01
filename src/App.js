@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { isloginStart} from "./redux/actions";
 import { useDispatch } from 'react-redux';
 import Manager from './pages/Manager';
+import Billdesk from './pages/Billdesk';
 
 // import ProtectedRoute from './service/ProtectedRoute';
 // import store from './redux/store';
@@ -34,7 +35,7 @@ function App() {
           } />
           <Route path='/billdesk' element={
             // <ProtectedRoute user_type="billdesk">
-              <BaseTable />
+              <Billdesk />
             // </ProtectedRoute>
           } />
           <Route exact path='/' element={

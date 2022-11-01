@@ -8,7 +8,7 @@ const rootReducer=combineReducers({
     category:categoryReducer,
     items:itemReducer,
     orders:orderReducer,
-    managerorders:ManagerorderReducer,
+    managerorders:ManagerorderReducer
 })
 
 export default rootReducer;

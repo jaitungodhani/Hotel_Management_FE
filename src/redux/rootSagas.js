@@ -2,8 +2,8 @@ import { take, takeEvery, takeLatest, put, all, delay, fork, call } from "redux-
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess, managerorderStart, managerorderError, managerorderSuccess, managerorderupdateSuccess, managerorderupdateError } from "./actions";
-import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi, orderApiget } from "./api";
+import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess, managerorderStart, managerorderError, managerorderSuccess, managerorderupdateSuccess, managerorderupdateError, orderFilterSuccess, orderFilterError } from "./actions";
+import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi, orderApiget, orderfilterapi } from "./api";
 import { toast } from "react-toastify";
 
 export function* onLoadISLoginStartAsync() {
@@ -232,9 +232,32 @@ export function* onManagerUpdateOrderStartAsync({ payload: { id, order_update_da
     }
 }
 
-
 export function* onManagerUpdateOrder() {
     yield takeEvery(types.MANAGER_ORDER_UPDATE_START, onManagerUpdateOrderStartAsync)
+}
+
+
+export function* onFilterOrderAsync({ payload }) {
+    try {
+        const response = yield call(orderfilterapi, payload);
+        console.log("######",response.data.data)
+        if (response.status === 200) {
+            yield delay(200);
+            // toast.success("U Order Successfully!!!!", { theme: "colored" });
+            yield put(orderFilterSuccess(response.data.data));
+        }
+        else {
+            toast.error("Error in Update Order!!!", { theme: "colored" });
+            yield put(orderFilterError(response.data.message));
+        }
+    }
+    catch (error) {
+        yield put(orderFilterError(error.response.data));
+    }
+}
+
+export function* onFilterOrder() {
+    yield takeEvery(types.ORDER_FILTER_START, onFilterOrderAsync)
 }
 
 
@@ -250,6 +273,7 @@ const userSagas = [
     fork(onUpdateOrder),
     fork(onManagerOrder),
     fork(onManagerUpdateOrder),
+    fork(onFilterOrder)
 ]
 
 export default function* rootSaga() {

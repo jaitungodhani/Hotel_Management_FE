@@ -8,9 +8,13 @@ import { managerorderupdateStart } from "../redux/actions";
 
 const Order=({particular_order})=>{
     const dispatch=useDispatch();
-    const [orderStatus,setOrderStatus]=useState(particular_order.status);
+    const [orderStatus,setOrderStatus]=useState();
+    
+    console.log("______:-",orderStatus);
     const [callApi,setCallAPI]=useState(false);
     useEffect(()=>{
+      console.log("______:-",particular_order);
+      setOrderStatus(particular_order.status);
       if(callApi){
         dispatch(managerorderupdateStart({id:particular_order.id,order_update_data:{"status":orderStatus}}));
       }
@@ -27,6 +31,8 @@ const Order=({particular_order})=>{
         setOrderStatus("Completed");
         setCallAPI(true);
     }
+    console.log("color:-",particular_order);
+    console.log("orderstatus:-",orderStatus);
     return(
         <div className="order">
               <div className="top">

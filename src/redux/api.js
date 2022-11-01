@@ -47,3 +47,6 @@ export const orderApiUpdate = async (order_id, payload) => {
     return await instance.put(`/api/orderdata/${order_id}/`, payload);
 };
 
+export const orderfilterapi = async (payload)=>{
+    return await instance.post('/api/orderfilter/',payload);
+}

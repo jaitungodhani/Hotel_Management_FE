@@ -199,11 +199,13 @@ export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
     switch(action.type){
         case types.MANAGER_ORDER_START:
         case types.MANAGER_ORDER_UPDATE_START:
+        case types.ORDER_FILTER_START:
             return {
                 ...state,
                 loading:true
             }
         case types.MANAGER_ORDER_SUCCESS:
+        case types.ORDER_FILTER_SUCCESS:
             return {
                 ...state,
                 loading:false,
@@ -221,6 +223,7 @@ export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
             }
         case types.MANAGER_ORDER_ERROR:
         case types.MANAGER_ORDER_UPDATE_ERROR:
+        case types.ORDER_FILTER_ERROR:
             return {
                 ...state,
                 loading:false,

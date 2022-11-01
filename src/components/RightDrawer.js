@@ -12,14 +12,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
 import MultipleSelectChip from './Filter';
 import { useDispatch, useSelector } from 'react-redux';
+import { orderFilterStart } from '../redux/actions';
 // import { loaditemStart, loadtablesStart } from '../redux/actions';
 
 const drawerWidth = 270;
@@ -69,11 +64,19 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+
 export default function PersistentDrawerLeft() {
+  const dispatch=useDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const {items}=useSelector((state)=>state.items);
   const {tables}=useSelector((state)=>state.data);
+  const [payload,setPayload]=React.useState({
+    "tables":[],
+    "items":[],
+    "status":[]
+  });
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -82,7 +85,32 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  // console.log(Items);
+  const handleFilter =(value,name)=>{
+    console.log("value",value,name);
+    if (name==="Table"){
+      setPayload({
+        ...payload,
+        tables:value
+      });
+    }
+    else if(name==="Item"){
+      setPayload({
+        ...payload,
+        items:value
+      });
+    }
+    else if(name==="Status"){
+      setPayload({
+        ...payload,
+        status:value
+      });
+    };
+    
+  };
+  
+  React.useEffect(()=>{
+    dispatch(orderFilterStart(payload));
+  },[payload])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -122,9 +150,9 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          <MultipleSelectChip name="Table" data={tables} />
-          <MultipleSelectChip name="Item" data={items}/>
-          <MultipleSelectChip name="Status" data={[{id:1,name:"Waiting"},{id:2,name:"Processing"},{id:3,name:"Completed"}]} />
+          <MultipleSelectChip name="Table" data={tables} handleFilter={handleFilter} />
+          <MultipleSelectChip name="Item" data={items} handleFilter={handleFilter} />
+          <MultipleSelectChip name="Status" data={[{id:1,name:"Waiting"},{id:2,name:"Processing"},{id:3,name:"Completed"}]} handleFilter={handleFilter}/>
         </List>
       </Drawer>
     </Box>

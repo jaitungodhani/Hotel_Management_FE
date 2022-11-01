@@ -1,0 +1,18 @@
+.Main{
+    background-color: aliceblue;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 45vh;
+    border-radius: 7px;
+}
+
+.Table{
+    margin: 10px 10px 0px 10px;
+    width: 10%;
+    background-color: hsl(0, 0%, 9%);
+    color: aliceblue;
+    padding: 20px 5px 5px 5px;
+}

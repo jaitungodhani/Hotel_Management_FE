@@ -19,18 +19,18 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+// const names = [
+//   'Oliver Hansen',
+//   'Van Henry',
+//   'April Tucker',
+//   'Ralph Hubbard',
+//   'Omar Alexander',
+//   'Carlos Abbott',
+//   'Miriam Wagner',
+//   'Bradley Wilkerson',
+//   'Virginia Andrews',
+//   'Kelly Snyder',
+// ];
 
 function getStyles(name, personName, theme) {
   return {
@@ -41,22 +41,25 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip({name,data}) {
+export default function MultipleSelectChip({name,data,handleFilter}) {
 // console.log("@#$#%#%#",name,data);
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     console.log("*******",event.target.value);
+    handleFilter(event.target.value,name);
     const {
       target: { value },
     } = event;
+    console.log(typeof value);
     setPersonName(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    
   };
-
+  // console.log("*******pay",payload);
   return (
     <div>
       <FormControl sx={{ m: 1, width: 235 }}>
