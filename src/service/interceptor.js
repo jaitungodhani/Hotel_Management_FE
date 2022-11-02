@@ -27,7 +27,7 @@ const GetRefreshToken = () => {
 }
 
 const instance = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://127.0.0.1:5555",
     headers: {
         "Content-Type": "application/json",
     },
@@ -67,7 +67,7 @@ instance.interceptors.response.use(
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true
                 const refreshToken = GetRefreshToken()
-                return axios.post('http://127.0.0.1:8000/auth_login/refresh_token/', {
+                return axios.post('http://127.0.0.1:5555/auth_login/refresh_token/', {
                     refresh: refreshToken
                 })
                     .then(res => {

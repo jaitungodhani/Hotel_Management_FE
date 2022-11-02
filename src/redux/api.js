@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 const appConfig = {
-    appUrl: "http://127.0.0.1:8000",
+    appUrl: "http://127.0.0.1:5555",
 };
 
 export const signIn = async (payload) => {

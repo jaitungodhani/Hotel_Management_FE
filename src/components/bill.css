@@ -5,7 +5,7 @@
     margin-left: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    height: 45vh;
+    /* height: 45vh; */
     border-radius: 7px;
 }
 
@@ -15,4 +15,41 @@
     background-color: hsl(0, 0%, 9%);
     color: aliceblue;
     padding: 20px 5px 5px 5px;
+}
+
+.OrderTable{
+    margin: 10px;
+    height: 250px;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.css-1fw5qro-MuiPaper-root{
+box-shadow: none !important;
+}
+
+.TotalAmonut{
+    background-color: hsl(0, 0%, 9%);
+    color: aliceblue;
+    padding: 10px;
+    text-align: right;
+    margin-top: 3px;
+}
+
+.PayButton{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background-color: green;
+    margin-top: 15px;
+    color: aliceblue;
+    border-radius: 0px 0px 7px 7px;
+}
+
+.PayButton:hover {
+    transition: 300ms ease-in;
+    background-color: #4C9A2A;
+    cursor: pointer;
 }

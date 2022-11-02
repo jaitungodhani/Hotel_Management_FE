@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 const columns = [
-  { id: "item", label: "Item", minWidth: 120},
+  { id: "item", label: "Item", minWidth: 120 },
   { id: "price", label: "Price", minWidth: 90 },
   {
     id: "quan",
@@ -24,31 +24,31 @@ const columns = [
 ];
 
 const Bill = ({ bill_data }) => {
-  function createData(item,price,quan,amount) {
-    return { item,price,quan,amount};
+  function createData(item, price, quan, amount) {
+    return { item, price, quan, amount };
   }
 
   const rows = [];
 
   bill_data.order?.map((order) => {
-    rows.push(createData(order.Item.name,order.Item.price,order.quantity,order.Item.price * order.quantity))
+    rows.push(createData(order.Item.name, order.Item.price, `x ${order.quantity}`, order.Item.price * order.quantity))
   });
 
 
   return (
     <div className="Main">
       <h3 className="Table">{bill_data.name}</h3>
-      
-      <div>
+
+      <div className="OrderTable">
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 350 }}>
+          <TableContainer sx={{ maxHeight: 250 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.id}
-                      sx={{ padding:1}}
+                      sx={{ padding: 1 }}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
@@ -69,7 +69,7 @@ const Bill = ({ bill_data }) => {
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell  sx={{ padding:0.8 }} key={column.id} align={column.align}>
+                          <TableCell sx={{ padding: 0.8 }} key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
@@ -86,7 +86,11 @@ const Bill = ({ bill_data }) => {
         {/* <h6>{order.Item.name} {order.Item.price} x {order.quantity}  {order.Item.price * order.quantity}</h6> */}
       </div>
       {/* ))} */}
-      <h3> total amount {bill_data.total_amount}</h3>
+      <h3 className="TotalAmonut"> Total Amount :-  {bill_data.total_amount} /-</h3>
+
+      <button className="PayButton">PAY</button>
+    
+
     </div>
   );
 };

@@ -8,28 +8,28 @@ import { managerorderupdateStart } from "../redux/actions";
 
 const Order=({particular_order})=>{
     const dispatch=useDispatch();
-    const [orderStatus,setOrderStatus]=useState();
+    const [orderStatus,setOrderStatus]=useState(particular_order.status);
     
-    console.log("______:-",orderStatus);
+    // console.log("______:-",orderStatus);
     const [callApi,setCallAPI]=useState(false);
     useEffect(()=>{
       console.log("______:-",particular_order);
-      setOrderStatus(particular_order.status);
+      // setOrderStatus(particular_order.status);
       if(callApi){
         dispatch(managerorderupdateStart({id:particular_order.id,order_update_data:{"status":orderStatus}}));
       }
     },[orderStatus]);
     const setWaitingStatus=()=>{
-        setOrderStatus("Waiting");
         setCallAPI(true);
+        setOrderStatus("Waiting");
     }
     const setProcessingStatus=()=>{
-        setOrderStatus("Processing");
         setCallAPI(true);
+        setOrderStatus("Processing");
     }
     const setCompletedStatus=()=>{
-        setOrderStatus("Completed");
         setCallAPI(true);
+        setOrderStatus("Completed");
     }
     console.log("color:-",particular_order);
     console.log("orderstatus:-",orderStatus);
