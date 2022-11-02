@@ -769,7 +769,7 @@ const Billdesk =()=>{
     ]
     return(
         <div>
-            <Grid container sx={{mt:9}}>
+            <Grid container sx={{mt:1}}>
                 {bills.map((i) => (
                 <Grid i xs={12} sm={6} md={4} lg={4}>
                     <Bill bill_data={i} />

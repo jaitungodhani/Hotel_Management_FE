@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import PayBillModal from "./PayBillModal";
 
 const columns = [
   { id: "item", label: "Item", minWidth: 120 },
@@ -14,16 +15,20 @@ const columns = [
   {
     id: "quan",
     label: "Quan.",
-    minWidth: 90
+    minWidth: 90,
   },
   {
     id: "amount",
     label: "Amount",
-    minWidth: 40
-  }
+    minWidth: 40,
+  },
 ];
 
 const Bill = ({ bill_data }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   function createData(item, price, quan, amount) {
     return { item, price, quan, amount };
   }
@@ -31,9 +36,15 @@ const Bill = ({ bill_data }) => {
   const rows = [];
 
   bill_data.order?.map((order) => {
-    rows.push(createData(order.Item.name, order.Item.price, `x ${order.quantity}`, order.Item.price * order.quantity))
+    rows.push(
+      createData(
+        order.Item.name,
+        order.Item.price,
+        `x ${order.quantity}`,
+        order.Item.price * order.quantity
+      )
+    );
   });
-
 
   return (
     <div className="Main">
@@ -69,7 +80,11 @@ const Bill = ({ bill_data }) => {
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell sx={{ padding: 0.8 }} key={column.id} align={column.align}>
+                          <TableCell
+                            sx={{ padding: 0.8 }}
+                            key={column.id}
+                            align={column.align}
+                          >
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
@@ -86,11 +101,13 @@ const Bill = ({ bill_data }) => {
         {/* <h6>{order.Item.name} {order.Item.price} x {order.quantity}  {order.Item.price * order.quantity}</h6> */}
       </div>
       {/* ))} */}
-      <h3 className="TotalAmonut"> Total Amount :-  {bill_data.total_amount} /-</h3>
+      <h3 className="TotalAmonut">
+        {" "}
+        Total Amount :- {bill_data.total_amount} /-
+      </h3>
 
-      <button className="PayButton">PAY</button>
-    
-
+      <button onClick={handleOpen} className="PayButton">PAY</button>
+      <PayBillModal open={open} handleClose={handleClose} />
     </div>
   );
 };

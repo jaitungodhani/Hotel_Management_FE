@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Fade,Backdrop} from '@mui/material';
 
-const style = ()=>({
+const style = (theme)=>({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -27,28 +28,40 @@ const style = ()=>({
   },
 });
 
-export default function BasicModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+export default function PayBillModal({open,handleClose}) {
+  const modelClose=()=>{
+    handleClose();
+  };
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
+        <Fade in={open}>
+          <Box sx={style}>
+            <Typography id="transition-modal-title" variant="h6" component="h2" color="success">
+              Pay Bill
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              Are you sure for pay???
+            </Typography>
+            <div style={{display: "flex"}}>
+            <div style={{marginLeft: "auto"}}>
+              <Button variant='outlined' color='success' onClick={modelClose}>Cancle</Button>
+              <Button variant='contained' color='success' sx={{ml:1}}>Pay</Button>
+            </div>
+            </div>
+          </Box>
+        </Fade>
       </Modal>
     </div>
   );
