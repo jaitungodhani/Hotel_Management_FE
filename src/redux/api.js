@@ -50,3 +50,15 @@ export const orderApiUpdate = async (order_id, payload) => {
 export const orderfilterapi = async (payload)=>{
     return await instance.post('/api/orderfilter/',payload);
 }
+
+export const livebillapi = async () => {
+    return await instance.get('/api/allbill/');
+}
+
+export const createbillapi = async (payload) => {
+    return await instance.post('/api/allbill/',payload);
+}
+
+export const completedbillapi = async () => {
+    return await instance.get('/api/completebills/');
+}

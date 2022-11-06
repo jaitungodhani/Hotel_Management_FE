@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Fade,Backdrop} from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { createBillStart, liveBillStart } from '../redux/actions';
 
 const style = (theme)=>({
   position: 'absolute',
@@ -28,10 +30,19 @@ const style = (theme)=>({
   },
 });
 
-export default function PayBillModal({open,handleClose}) {
+export default function PayBillModal({open,handleClose,table,total_amount}) {
+  const dispatch = useDispatch();
+
   const modelClose=()=>{
     handleClose();
   };
+
+  const onBillCreate=()=>{
+    console.log(table,total_amount);
+    dispatch(createBillStart({table:table, pay:true, total_amount:total_amount}));
+    dispatch(liveBillStart());
+  };
+
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -57,7 +68,7 @@ export default function PayBillModal({open,handleClose}) {
             <div style={{display: "flex"}}>
             <div style={{marginLeft: "auto"}}>
               <Button variant='outlined' color='success' onClick={modelClose}>Cancle</Button>
-              <Button variant='contained' color='success' sx={{ml:1}}>Pay</Button>
+              <Button variant='contained' color='success' sx={{ml:1}} onClick={onBillCreate}>Pay</Button>
             </div>
             </div>
           </Box>

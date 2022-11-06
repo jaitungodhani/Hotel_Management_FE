@@ -2,8 +2,8 @@ import { take, takeEvery, takeLatest, put, all, delay, fork, call } from "redux-
 
 import * as types from "./actionTypes";
 
-import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess, managerorderStart, managerorderError, managerorderSuccess, managerorderupdateSuccess, managerorderupdateError, orderFilterSuccess, orderFilterError } from "./actions";
-import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi, orderApiget, orderfilterapi } from "./api";
+import { loadtablesSuccess, loadtablesError, loadcategorySuccess, loadcategoryError, loaditemSuccess, loaditemError, loadorderError, loadorderSuccess, deleteorderError, deleteorderSuccess, createorderSuccess, updateorderError, updateorderSuccess, createorderError, loginSuccess, loginError, isloginSuccess, managerorderStart, managerorderError, managerorderSuccess, managerorderupdateSuccess, managerorderupdateError, orderFilterSuccess, orderFilterError, liveBillError, liveBillSuccess, createBillSuccess, createBillError, completedBillError, completedBillSuccess } from "./actions";
+import { tableApi, categoryApi, itemsApi, orderApi, orderApidelete, orderApiPost, orderApiUpdate, signIn, isLoginApi, orderApiget, orderfilterapi, livebillapi, createbillapi, completedbillapi } from "./api";
 import { toast } from "react-toastify";
 
 export function* onLoadISLoginStartAsync() {
@@ -261,6 +261,76 @@ export function* onFilterOrder() {
 }
 
 
+export function* onLiveBillAsync() {
+    try {
+        const response = yield call(livebillapi);
+        console.log("######",response.data.data)
+        if (response.status === 200) {
+            yield delay(200);
+            // toast.success("U Order Successfully!!!!", { theme: "colored" });
+            yield put(liveBillSuccess(response.data.data));
+        }
+        else {
+            // toast.error("Error in Update Order!!!", { theme: "colored" });
+            yield put(liveBillError(response.data.message));
+        }
+    }
+    catch (error) {
+        yield put(liveBillError(error.response.data));
+    }
+}
+
+export function* onLiveBill() {
+    yield takeEvery(types.GETLIVE_BILL_START, onLiveBillAsync)
+}
+
+
+export function* onCreateBillAsync({ payload }) {
+    try {
+        const response = yield call(createbillapi,payload);
+        console.log("######",response.data.data)
+        if (response.status === 200) {
+            yield delay(200);
+            toast.success("Bill Create Successfully!!!!", { theme: "colored" });
+            yield put(createBillSuccess());
+        }
+        else {
+            toast.error("Error in Bill Create!!!", { theme: "colored" });
+            yield put(createBillError(response.data.message));
+        }
+    }
+    catch (error) {
+        yield put(createBillError(error.response.data));
+    }
+}
+
+export function* onCreateBill() {
+    yield takeEvery(types.CREATE_BILL_START, onCreateBillAsync)
+}
+
+export function* onCompletedBillAsync() {
+    try {
+        const response = yield call(completedbillapi);
+        console.log("######",response.data.data)
+        if (response.status === 200) {
+            yield delay(200);
+            // toast.success("U Order Successfully!!!!", { theme: "colored" });
+            yield put(completedBillSuccess(response.data.data));
+        }
+        else {
+            // toast.error("Error in Update Order!!!", { theme: "colored" });
+            yield put(completedBillError(response.data.message));
+        }
+    }
+    catch (error) {
+        yield put(completedBillError(error.response.data));
+    }
+}
+
+export function* onCompletedBill() {
+    yield takeEvery(types.GETCOMPLETED_BILL_START, onCompletedBillAsync)
+}
+
 const userSagas = [
     fork(onISLoadLogin),
     fork(onLoadLogin),
@@ -273,7 +343,10 @@ const userSagas = [
     fork(onUpdateOrder),
     fork(onManagerOrder),
     fork(onManagerUpdateOrder),
-    fork(onFilterOrder)
+    fork(onFilterOrder),
+    fork(onLiveBill),
+    fork(onCreateBill),
+    fork(onCompletedBill)
 ]
 
 export default function* rootSaga() {

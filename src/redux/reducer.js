@@ -37,6 +37,18 @@ const initialManagerOrderState={
     error:null
 }
 
+const initialLiveBillState={
+    bills:[],
+    loading:false,
+    error:null
+}
+
+const initialCompletedBillState={
+    completed_bills:[],
+    loading:false,
+    error:null
+}
+
 export const userReducer=(state=initialUserState,action)=>{
     switch(action.type){
         case types.LOGIN_START:
@@ -228,6 +240,60 @@ export const ManagerorderReducer=(state=initialManagerOrderState,action)=>{
                 ...state,
                 loading:false,
                 orders:action.error
+            }
+        default:
+            return state
+    }
+}
+
+export const ManageLiveBills=(state=initialLiveBillState,action)=>{
+    switch(action.type){
+        case types.GETLIVE_BILL_START:
+        case types.CREATE_BILL_START:
+        case types.CREATE_BILL_SUCCESS:
+            return {
+                ...state,
+                loading:true
+            }
+
+        case types.GETLIVE_BILL_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                bills:action.payload
+            }
+
+        case types.GETLIVE_BILL_ERROR:
+            return {
+                ...state,
+                loading:false,
+                bills:action.payload
+            }
+        default:
+            return state
+    }
+}
+
+export const ManageCompletedBills=(state=initialCompletedBillState,action)=>{
+    switch(action.type){
+        case types.GETCOMPLETED_BILL_START:
+            return {
+                ...state,
+                loading:true
+            }
+
+        case types.GETCOMPLETED_BILL_SUCCESS:
+            return{
+                ...state,
+                loading:false,
+                completed_bills:action.payload
+            }
+
+        case types.GETCOMPLETED_BILL_ERROR:
+            return {
+                ...state,
+                loading:false,
+                completed_bills:action.payload
             }
         default:
             return state
