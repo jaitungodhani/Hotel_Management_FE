@@ -41,6 +41,7 @@ export default function PayBillModal({open,handleClose,table,total_amount}) {
     console.log(table,total_amount);
     dispatch(createBillStart({table:table, pay:true, total_amount:total_amount}));
     dispatch(liveBillStart());
+    handleClose();
   };
 
   return (
