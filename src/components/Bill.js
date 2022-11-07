@@ -105,8 +105,8 @@ const Bill = ({ bill_data }) => {
         Total Amount :- {bill_data.total_amount} /-
       </h3>
 
-      <button onClick={handleOpen} className="PayButton">PAY</button>
-      <PayBillModal open={open} handleClose={handleClose} />
+      <button onClick={handleOpen} className="PayButton" disabled={ bill_data.total_amount === null}>PAY</button>
+      <PayBillModal open={open} handleClose={handleClose} table={bill_data.id} total_amount={bill_data.total_amount}/>
     </div>
   );
 };

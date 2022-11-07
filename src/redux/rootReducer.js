@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import {tableReducer,categoryReducer, itemReducer, orderReducer, userReducer, ManagerorderReducer} from "./reducer";
+import {tableReducer,categoryReducer, itemReducer, orderReducer, userReducer, ManagerorderReducer, ManageLiveBills, ManageCompletedBills} from "./reducer";
 
 const rootReducer=combineReducers({
     user:userReducer,
@@ -8,7 +8,9 @@ const rootReducer=combineReducers({
     category:categoryReducer,
     items:itemReducer,
     orders:orderReducer,
-    managerorders:ManagerorderReducer
+    managerorders:ManagerorderReducer,
+    livebills:ManageLiveBills,
+    completedbills:ManageCompletedBills
 })
 
 export default rootReducer;

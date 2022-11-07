@@ -174,3 +174,45 @@ export const orderFilterError=(error)=>({
     type:types.ORDER_FILTER_ERROR,
     payload:error
 })
+
+export const liveBillStart=()=>({
+    type:types.GETLIVE_BILL_START
+})
+
+export const liveBillSuccess=(livebill)=>({
+    type:types.GETLIVE_BILL_SUCCESS,
+    payload:livebill
+})
+
+export const liveBillError=(error)=>({
+    type:types.GETLIVE_BILL_SUCCESS,
+    payload:error
+})
+
+export const createBillStart=(new_bill_data)=>({
+    type:types.CREATE_BILL_START,
+    payload:new_bill_data
+})
+
+export const createBillSuccess=()=>({
+    type:types.CREATE_BILL_SUCCESS
+})
+
+export const createBillError=(error)=>({
+    type:types.CREATE_BILL_ERROR,
+    payload:error
+})
+
+export const completedBillStart=()=>({
+    type:types.GETCOMPLETED_BILL_START
+})
+
+export const completedBillSuccess=(completed_bills)=>({
+    type:types.GETCOMPLETED_BILL_SUCCESS,
+    payload:completed_bills
+})
+
+export const completedBillError=(error)=>({
+    type:types.GETCOMPLETED_BILL_ERROR,
+    payload:error
+})
