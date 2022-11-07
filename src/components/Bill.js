@@ -49,7 +49,6 @@ const Bill = ({ bill_data }) => {
   return (
     <div className="Main">
       <h3 className="Table">{bill_data.name}</h3>
-
       <div className="OrderTable">
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 250 }}>
