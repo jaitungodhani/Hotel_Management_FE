@@ -294,12 +294,13 @@ export function* onCreateBillAsync({ payload }) {
             toast.success("Bill Create Successfully!!!!", { theme: "colored" });
             yield put(createBillSuccess());
         }
-        else {
-            toast.error("Error in Bill Create!!!", { theme: "colored" });
-            yield put(createBillError(response.data.message));
-        }
+        // else {
+        //     toast.error("Error in Bill Create!!!", { theme: "colored" });
+        //     yield put(createBillError(response.data.message));
+        // }
     }
     catch (error) {
+        toast.error(error.response.data.message, { theme: "colored" });
         yield put(createBillError(error.response.data));
     }
 }

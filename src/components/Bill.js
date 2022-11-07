@@ -11,15 +11,20 @@ import PayBillModal from "./PayBillModal";
 
 const columns = [
   { id: "item", label: "Item", minWidth: 120 },
-  { id: "price", label: "Price", minWidth: 90 },
+  { id: "price", label: "Price", minWidth: 50 },
   {
     id: "quan",
     label: "Quan.",
-    minWidth: 90,
+    minWidth: 50,
   },
   {
     id: "amount",
     label: "Amount",
+    minWidth: 40,
+  },
+  {
+    id: "status",
+    label: "Status",
     minWidth: 40,
   },
 ];
@@ -29,8 +34,8 @@ const Bill = ({ bill_data }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  function createData(item, price, quan, amount) {
-    return { item, price, quan, amount };
+  function createData(item, price, quan, amount, status) {
+    return { item, price, quan, amount, status};
   }
 
   const rows = [];
@@ -41,7 +46,8 @@ const Bill = ({ bill_data }) => {
         order.Item.name,
         order.Item.price,
         `x ${order.quantity}`,
-        order.Item.price * order.quantity
+        order.Item.price * order.quantity,
+        order.status
       )
     );
   });
