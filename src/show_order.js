@@ -82,7 +82,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-export default function TransitionsModal({ open, handleClose, table, orderData,handleSnakbarClick }) {
+export default function TransitionsModal({ open, handleClose, table, orderData }) {
     const [updateorder, setupdateOrder] = React.useState(false);
     const [deleteorder, setdeleteOrder] = React.useState(false);
     const [deleteorderdata, setDeleteOrderData] = React.useState();
@@ -153,7 +153,7 @@ export default function TransitionsModal({ open, handleClose, table, orderData,h
                                                     <IconButton>
                                                         <DeleteIcon onClick={() => handleDeleteOpen(row)} sx={buttonstyledClasses.delete} />
                                                     </IconButton>
-                                                    <DeleteOrderModal handleClose={handleDeleteClose} open={deleteorder} rawData={deleteorderdata} msg="Are you sure for delete order?" handleSnakbarClick={handleSnakbarClick}/>
+                                                    <DeleteOrderModal handleClose={handleDeleteClose} open={deleteorder} rawData={deleteorderdata} msg="Are you sure for delete order?" />
                                                     <IconButton>
                                                         <EditIcon onClick={() => handleUpdateOpen(row)} sx={buttonstyledClasses.edit} /></IconButton>
                                                     <AddOrderModal open={updateorder} handleClose={handleUpdateClose} rawData={updateorderData} table={table} />

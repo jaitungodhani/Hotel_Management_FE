@@ -60,8 +60,8 @@ const Bill = ({ bill_data, type }) => {
       {
         type==="completed" && 
         <div className="BillInfo">
-          <h5>Bill id :- {bill_data.id}</h5>
-          <h5 className="DateTime">Date & time :- {moment(bill_data.create_at).format("dddd, MMMM Do YYYY, h:mm:ss a")}</h5>
+          <h5>{bill_data.id}</h5>
+          <h5 className="DateTime">{moment(bill_data.create_at).format("dddd, MMMM Do YYYY, h:mm:ss a")}</h5>
         </div>
       }
       </div>

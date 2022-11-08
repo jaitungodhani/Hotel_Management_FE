@@ -64,7 +64,7 @@ const renderCustomizedLabel = ({
   );
 };
 
-const Table = ({ item, handleSnakbarClick }) => {
+const Table = ({ item }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -121,14 +121,14 @@ const Table = ({ item, handleSnakbarClick }) => {
           open={open}
           handleClose={handleClose}
           table={item}
-          handleSnakbarClick={handleSnakbarClick}
+          // handleSnakbarClick={handleSnakbarClick}
         />
       )}
       <AddOrderModal
         open={openaddorder}
         handleClose={handleaddorderClose}
         table={item}
-        handleSnakbarClick={handleSnakbarClick}
+        // handleSnakbarClick={handleSnakbarClick}
       />
     </div>
   );

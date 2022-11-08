@@ -40,7 +40,7 @@ const selectcontrol = {
     marginBottom: '10px'
 }
 
-export default function AddOrderModal({ open, handleClose, table, rawData, handleSnakbarClick }) {
+export default function AddOrderModal({ open, handleClose, table, rawData }) {
     const dispatch = useDispatch();
     // const [categoryData, setCategoryData] = React.useState([]);
     const { categories } = useSelector((state) => state.category);
@@ -99,10 +99,10 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
     };
 
     const createOrder = () => {
-        if (subitem === undefined || !quantity) {
-            handleSnakbarClick(TransitionUp, "Fillup form correctly");
-        }
-        else {
+        // if (subitem === undefined || !quantity) {
+        //     handleSnakbarClick(TransitionUp, "Fillup form correctly");
+        // }
+        // else {
             // orderApiPost({ Item_id: subitem, quantity: quantity, table: table.id }).then((res) => {
             //     console.log("####", res.data.error);
             //     if (res.data.error === false) {
@@ -121,7 +121,7 @@ export default function AddOrderModal({ open, handleClose, table, rawData, handl
             handleClose();
             dispatch(createorderStart({ Item_id: subitem, quantity: quantity, table: table.id }));
             dispatch(loadtablesStart());
-        };
+        // };
     }
 
     const updateOrder = () => {
