@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import PayBillModal from "./PayBillModal";
+import moment from "moment/moment";
 
 const columns = [
   { id: "item", label: "Item", minWidth: 120 },
@@ -29,7 +30,7 @@ const columns = [
   },
 ];
 
-const Bill = ({ bill_data }) => {
+const Bill = ({ bill_data, type }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -54,7 +55,16 @@ const Bill = ({ bill_data }) => {
 
   return (
     <div className="Main">
-      <h3 className="Table">{bill_data.name}</h3>
+      <div className="Topheader">
+      {type==="live"?<h3 className="Table">{bill_data.name}</h3>:<h3 className="Table">{bill_data.table.name}</h3>}
+      {
+        type==="completed" && 
+        <div className="BillInfo">
+          <h5>Bill id :- {bill_data.id}</h5>
+          <h5 className="DateTime">Date & time :- {moment(bill_data.create_at).format("dddd, MMMM Do YYYY, h:mm:ss a")}</h5>
+        </div>
+      }
+      </div>
       <div className="OrderTable">
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 250 }}>
@@ -111,7 +121,7 @@ const Bill = ({ bill_data }) => {
         Total Amount :- {bill_data.total_amount} /-
       </h3>
 
-      <button onClick={handleOpen} className="PayButton" disabled={ bill_data.total_amount === null}>PAY</button>
+      {type === "live" && <button onClick={handleOpen} className="PayButton" disabled={ bill_data.total_amount === null}>PAY</button>}
       <PayBillModal open={open} handleClose={handleClose} table={bill_data.id} total_amount={bill_data.total_amount}/>
     </div>
   );

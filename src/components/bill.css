@@ -54,3 +54,14 @@ box-shadow: none !important;
     background-color: #4C9A2A;
     cursor: pointer;
 }
+
+.Topheader{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.BillInfo{
+    padding: 15px 10px 0px 0px;
+}

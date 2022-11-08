@@ -16,7 +16,7 @@ const Billdesk =()=>{
             <Grid container sx={{mt:1}}>
                 {bills.map((i) => (
                 <Grid i xs={12} sm={6} md={4} lg={4}>
-                    <Bill bill_data={i} />
+                    <Bill bill_data={i} type="live" />
                 </Grid>
                 ))}
             </Grid>
