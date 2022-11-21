@@ -11,9 +11,9 @@ const BaseTable = () => {
   const dispatch = useDispatch();
   // const [table_data,setTabledata]=useState([]);
   const {tables} = useSelector((state) => state.data);
-  const [openSnakbar, setOpenSnakbar] = React.useState(false);
-  const [transition, setTransition] = React.useState(undefined);
-  const [snakbarmsg,setSnakbarMsg]=React.useState("");
+  // const [openSnakbar, setOpenSnakbar] = React.useState(false);
+  // const [transition, setTransition] = React.useState(undefined);
+  // const [snakbarmsg,setSnakbarMsg]=React.useState("");
 
   useEffect(()=>{
     dispatch(loadtablesStart());
@@ -22,15 +22,15 @@ const BaseTable = () => {
   },[]);
   
 
-  const handleSnakbarClose = () => {
-    setOpenSnakbar(false);
-  };
+  // const handleSnakbarClose = () => {
+  //   setOpenSnakbar(false);
+  // };
 
-  const handleSnakbarClick = (Transition,msg) => {
-    setSnakbarMsg(msg);
-    setTransition(() => Transition);
-    setOpenSnakbar(true);
-  };
+  // const handleSnakbarClick = (Transition,msg) => {
+  //   // setSnakbarMsg(msg);
+  //   setTransition(() => Transition);
+  //   setOpenSnakbar(true);
+  // };
 
   return (
 
@@ -38,17 +38,17 @@ const BaseTable = () => {
       <Grid container >
         {tables.map((item) => (
           <Grid item xs={12} sm={6} md={4} lg={4}>
-            <Table item={item} handleSnakbarClick={handleSnakbarClick}/>
+            <Table item={item} />
           </Grid>
         ))}
       </Grid>
-      <Snackbar
+      {/* <Snackbar
             open={openSnakbar}
             onClose={handleSnakbarClose}
             TransitionComponent={transition}
             message={snakbarmsg}
             key={transition ? transition.name : ''}
-            />
+            /> */}
     </div>
   );
 }

@@ -29,7 +29,7 @@ const style = (theme) => ({
   },
 });
 
-export default function DeleteOrderModal({ open, handleClose, rawData, msg,handleSnakbarClick }) {
+export default function DeleteOrderModal({ open, handleClose, rawData, msg}) {
   console.log("Delete_data!!!!", rawData);
   const dispatch=useDispatch();
   const modelClose=()=>{
