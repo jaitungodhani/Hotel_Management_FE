@@ -13,7 +13,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from "react-router-dom";
 import { signIn } from "./service/config";
 import { useDispatch, useSelector } from "react-redux";
-import { loginStart } from "./redux/actions";
+import { isloginStart, loginStart } from "./redux/actions";
 
 
 
@@ -55,8 +55,17 @@ const Login = () => {
     setBilldesk(true);
     console.log(waiter, manager, billdesk);
   }
+ 
+  // dispatch(isloginStart());
+  // useEffect(()=>{
+  //   // if(loginState===true)
+  //   // {
+  //   dispatch(isloginStart());
+  //   // }
+  // }, []);
 
   useEffect(() => {
+    
     console.log(user);
     if (user) {
       if (user.user_type === "waiter") {

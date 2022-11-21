@@ -81,7 +81,7 @@ instance.interceptors.response.use(
                         }
                     }, (error) => {
                         localStorage.clear();
-                        window.location.href = "http://localhost:3000";
+                        window.location.href = "http://localhost:3000/";
                         console.log(".........", error);
                     })
             }

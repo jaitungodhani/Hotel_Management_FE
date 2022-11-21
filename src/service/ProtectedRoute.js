@@ -11,6 +11,7 @@ const ProtectedRoute = ({ user_type, children }) => {
     //   }
 
     if (loading === false && user && user.user_type !== user_type) {
+        console.log("protected",user.user_type);
         return navigate(`/${user.user_type}`)
     }
 
