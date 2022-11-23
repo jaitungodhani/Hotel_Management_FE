@@ -25,7 +25,7 @@ function App() {
       dispatch(isloginStart());
     }  
   }, []);
-  
+
   return (
     <div>
       <ToastContainer />
@@ -46,6 +46,9 @@ function App() {
             <ProtectedRoute user_type="billdesk">
               <BillTabs />
             </ProtectedRoute>
+          } />
+          <Route exact path='/:type' element={
+            <Login />
           } />
           <Route exact path='/' element={
             <Login />
