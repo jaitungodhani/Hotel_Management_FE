@@ -35,6 +35,7 @@ export function* onLoadLoginStartAsync({ payload }) {
             toast.success("Login Successfully!!!!", { theme: "colored" });
             localStorage.setItem("access_token", response.data.data.access_token);
             localStorage.setItem("refresh_token", response.data.data.refresh_token);
+            localStorage.setItem("IsLogin", true);
             yield put(loginSuccess(response.data.data.user_data))
         } 
     }

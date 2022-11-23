@@ -20,11 +20,12 @@ function App() {
   const dispatch = useDispatch();
   // dispatch(isloginStart());
   useEffect(()=>{
-    // if(loginState===true)
-    // {
-    dispatch(isloginStart());
-    // }
+    const isLogin = localStorage.getItem("IsLogin");
+    if(isLogin){
+      dispatch(isloginStart());
+    }  
   }, []);
+  
   return (
     <div>
       <ToastContainer />
